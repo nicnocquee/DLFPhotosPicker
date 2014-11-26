@@ -52,9 +52,9 @@ static NSString * const CollectionSegue = @"showCollection";
     if ([segue.identifier isEqualToString:AllPhotosSegue]) {
         // Fetch all assets, sorted by date created.
         PHFetchOptions *options = [[PHFetchOptions alloc] init];
-        options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
+        options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
         detailViewController.assetsFetchResults = [PHAsset fetchAssetsWithOptions:options];
-        
+        detailViewController.title = NSLocalizedString(@"All Photos", nil);
     } else if ([segue.identifier isEqualToString:CollectionSegue]) {
         NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
         PHFetchResult *fetchResult = self.collectionsFetchResults[indexPath.section - 1];
@@ -64,6 +64,7 @@ static NSString * const CollectionSegue = @"showCollection";
             PHFetchResult *assetsFetchResult = [PHAsset fetchAssetsInAssetCollection:assetCollection options:nil];
             detailViewController.assetsFetchResults = assetsFetchResult;
             detailViewController.assetCollection = assetCollection;
+            detailViewController.title = collection.localizedTitle;
         }
     }
     

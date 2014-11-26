@@ -9,7 +9,7 @@
         <scene sceneID="xZ2-LZ-21i">
             <objects>
                 <collectionViewController id="p87-Bp-8aJ" customClass="DetailViewController" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="bTL-Pa-5GJ">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" id="bTL-Pa-5GJ">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -143,6 +143,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="pwd-ld-Ahd"/>
+        <segue reference="yc6-OX-QyT"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -35,7 +35,7 @@
 }
 @end
 
-@interface DetailViewController () <PHPhotoLibraryChangeObserver>
+@interface DetailViewController () <PHPhotoLibraryChangeObserver, UICollectionViewDelegateFlowLayout>
 
 @property (strong) PHCachingImageManager *imageManager;
 @property CGRect previousPreheatRect;
@@ -57,6 +57,18 @@ static CGSize AssetGridThumbnailSize;
 - (void)dealloc
 {
     [[PHPhotoLibrary sharedPhotoLibrary] unregisterChangeObserver:self];
+}
+
+- (void)viewDidLoad {
+    if (!self.assetsFetchResults) {
+        self.title = NSLocalizedString(@"All Photos", nil);
+        
+        PHFetchOptions *options = [[PHFetchOptions alloc] init];
+        options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+        self.assetsFetchResults = [PHAsset fetchAssetsWithOptions:options];
+        
+        [self.collectionView reloadData];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -125,6 +137,34 @@ static CGSize AssetGridThumbnailSize;
             [self resetCachedAssets];
         }
     });
+}
+
+#pragma mark - Orientation
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self.collectionView.collectionViewLayout invalidateLayout];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        
+    }];
+}
+
+#pragma mark - UICollectionViewDelegateFlowLayout
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    int numberOfColumns = 4;
+    CGFloat collectionViewWidth = collectionView.frame.size.width;
+    CGFloat spacing = [(id)collectionView.delegate collectionView:collectionView layout:collectionViewLayout minimumInteritemSpacingForSectionAtIndex:indexPath.section];
+    CGFloat width = floorf((collectionViewWidth-spacing*(numberOfColumns+1))/(float)numberOfColumns);
+    return CGSizeMake(width, width);
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    return 1.f;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    return 1;
 }
 
 #pragma mark - UICollectionViewDataSource
