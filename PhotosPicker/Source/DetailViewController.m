@@ -153,7 +153,7 @@ static CGSize AssetGridThumbnailSize;
 #pragma mark - UICollectionViewDelegateFlowLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    int numberOfColumns = 4;
+    int numberOfColumns = 3;
     CGFloat collectionViewWidth = collectionView.frame.size.width;
     CGFloat spacing = [(id)collectionView.delegate collectionView:collectionView layout:collectionViewLayout minimumInteritemSpacingForSectionAtIndex:indexPath.section];
     CGFloat width = floorf((collectionViewWidth-spacing*(numberOfColumns+1))/(float)numberOfColumns);
