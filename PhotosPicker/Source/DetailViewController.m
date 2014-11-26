@@ -10,6 +10,13 @@
 #import "DLFPhotoCell.h"
 #import "DLFAssetsLayout.h"
 
+typedef NS_ENUM(NSInteger, TouchPointInCell) {
+    TouchPointInCellTopLeft,
+    TouchPointInCellTopRight,
+    TouchPointInCellBottomLeft,
+    TouchPointInCellBottomRight
+};
+
 @import Photos;
 
 @implementation NSIndexSet (Convenience)
@@ -44,11 +51,25 @@ CGSize cellSize(UICollectionView *collectionView) {
     return CGSizeMake(width, width);
 }
 
+TouchPointInCell positionInCell(UICollectionViewCell *cell, CGPoint touchPoint) {
+    if (touchPoint.x < cell.frame.size.width/2 && touchPoint.y < cell.frame.size.height/2) {
+        return TouchPointInCellTopLeft;
+    } else if (touchPoint.x > cell.frame.size.width/2 && touchPoint.y > cell.frame.size.height/2) {
+        return TouchPointInCellBottomRight;
+    } else if (touchPoint.x < cell.frame.size.width/2 && touchPoint.y > cell.frame.size.height/2) {
+        return TouchPointInCellBottomLeft;
+    }
+    return TouchPointInCellTopRight;
+}
+
 @interface DetailViewController () <PHPhotoLibraryChangeObserver, UICollectionViewDelegateFlowLayout>
 
 @property (strong) PHCachingImageManager *imageManager;
 @property CGRect previousPreheatRect;
 @property (nonatomic, strong, readonly) UIPinchGestureRecognizer *pinchGesture;
+@property (nonatomic, strong, readonly) UILongPressGestureRecognizer *longGesture;
+@property (nonatomic, assign) CGPoint initialLongGesturePoint;
+@property (nonatomic, assign) CGPoint initialLongGestureCellCenter;
 
 @end
 
@@ -83,6 +104,9 @@ static CGSize AssetGridThumbnailSize;
     
     _pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinchGesture:)];
     [self.collectionView addGestureRecognizer:_pinchGesture];
+    
+    _longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongGesture:)];
+    [self.collectionView addGestureRecognizer:_longGesture];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -325,6 +349,56 @@ static CGSize AssetGridThumbnailSize;
         DLFPhotoCell *cell = (DLFPhotoCell *)[self.collectionView cellForItemAtIndexPath:layout.pinchedCellPath];
         [cell setClipsToBounds:YES];
         layout.pinchedCellPath = nil;
+        [self.collectionView performBatchUpdates:^{
+            
+        } completion:^(BOOL finished) {
+            
+        }];
+    }
+}
+
+- (void)handleLongGesture:(UILongPressGestureRecognizer *)sender {
+    DLFAssetsLayout *layout = (DLFAssetsLayout *)self.collectionView.collectionViewLayout;
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        [UIView animateWithDuration:0.3 animations:^{
+            CGPoint initialPinchPoint = [sender locationInView:self.collectionView];
+            NSIndexPath *pinchedCellPath = [self.collectionView indexPathForItemAtPoint:initialPinchPoint];
+            layout.pinchedCellPath = pinchedCellPath;
+            layout.pinchedCellScale = 2.5;
+            DLFPhotoCell *cell = (DLFPhotoCell *)[self.collectionView cellForItemAtIndexPath:pinchedCellPath];
+            CGPoint pointInCollectionView = [sender locationInView:self.collectionView];
+            CGPoint pointInCell = [sender locationInView:cell];
+            TouchPointInCell position = positionInCell(cell, pointInCell);
+            switch (position) {
+                case TouchPointInCellTopRight:
+                    layout.pinchedCellCenter = CGPointMake(cell.frame.origin.x, cell.frame.origin.y + cell.frame.size.height);
+                    break;
+                case TouchPointInCellTopLeft:
+                    layout.pinchedCellCenter = CGPointMake(cell.frame.origin.x + cell.frame.size.width, cell.frame.origin.y + cell.frame.size.height);
+                    break;
+                case TouchPointInCellBottomLeft:
+                    layout.pinchedCellCenter = CGPointMake(cell.frame.origin.x + cell.frame.size.width, cell.frame.origin.y);
+                    break;
+                case TouchPointInCellBottomRight:
+                    layout.pinchedCellCenter = cell.frame.origin;
+                    break;
+                default:
+                    break;
+            }
+            
+            [cell setClipsToBounds:NO];
+            self.initialLongGesturePoint = pointInCollectionView;
+            self.initialLongGestureCellCenter = layout.pinchedCellCenter;
+        }];
+    } else if (sender.state == UIGestureRecognizerStateChanged) {
+        CGPoint pointInCollectionView = [sender locationInView:self.collectionView];
+        CGFloat deltaX = pointInCollectionView.x - self.initialLongGesturePoint.x;
+        CGFloat deltaY = pointInCollectionView.y - self.initialLongGesturePoint.y;
+        layout.pinchedCellCenter = CGPointMake(self.initialLongGestureCellCenter.x+deltaX, self.initialLongGestureCellCenter.y+deltaY);
+    } else if (sender.state == UIGestureRecognizerStateEnded) {
+        DLFPhotoCell *cell = (DLFPhotoCell *)[self.collectionView cellForItemAtIndexPath:layout.pinchedCellPath];
+        layout.pinchedCellPath = nil;
+        [cell setClipsToBounds:YES];
         [self.collectionView performBatchUpdates:^{
             
         } completion:^(BOOL finished) {
