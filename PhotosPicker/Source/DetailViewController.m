@@ -8,6 +8,7 @@
 
 #import "DetailViewController.h"
 #import "DLFPhotoCell.h"
+#import "DLFAssetsLayout.h"
 
 @import Photos;
 
@@ -39,6 +40,7 @@
 
 @property (strong) PHCachingImageManager *imageManager;
 @property CGRect previousPreheatRect;
+@property (nonatomic, strong, readonly) UIPinchGestureRecognizer *pinchGesture;
 
 @end
 
@@ -70,6 +72,9 @@ static CGSize AssetGridThumbnailSize;
         
         [self.collectionView reloadData];
     }
+    
+    _pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinchGesture:)];
+    [self.collectionView addGestureRecognizer:_pinchGesture];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -296,6 +301,28 @@ static CGSize AssetGridThumbnailSize;
         [assets addObject:asset];
     }
     return assets;
+}
+
+#pragma mark - UIPinchGestureRecognizer
+
+- (void)handlePinchGesture:(UIPinchGestureRecognizer *)sender {
+    DLFAssetsLayout *layout = (DLFAssetsLayout *)self.collectionView.collectionViewLayout;
+    
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        CGPoint initialPinchPoint = [sender locationInView:self.collectionView];
+        NSIndexPath *pinchedCellPath = [self.collectionView indexPathForItemAtPoint:initialPinchPoint];
+        layout.pinchedCellPath = pinchedCellPath;
+    } else if (sender.state == UIGestureRecognizerStateChanged) {
+        layout.pinchedCellScale = sender.scale;
+        layout.pinchedCellCenter = [sender locationInView:self.collectionView];
+    } else if (sender.state == UIGestureRecognizerStateEnded) {
+        layout.pinchedCellPath = nil;
+        [self.collectionView performBatchUpdates:^{
+            
+        } completion:^(BOOL finished) {
+            
+        }];
+    }
 }
 
 @end
