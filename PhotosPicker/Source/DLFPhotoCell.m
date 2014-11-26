@@ -9,7 +9,7 @@
 #import "DLFPhotoCell.h"
 
 @interface DLFPhotoCell ()
-@property (strong) IBOutlet UIImageView *imageView;
+
 @end
 
 @implementation DLFPhotoCell

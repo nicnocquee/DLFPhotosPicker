@@ -36,6 +36,14 @@
 }
 @end
 
+CGSize cellSize(UICollectionView *collectionView) {
+    int numberOfColumns = 3;
+    CGFloat collectionViewWidth = collectionView.frame.size.width;
+    CGFloat spacing = [(id)collectionView.delegate collectionView:collectionView layout:collectionView.collectionViewLayout minimumInteritemSpacingForSectionAtIndex:0];
+    CGFloat width = floorf((collectionViewWidth-spacing*(numberOfColumns+1))/(float)numberOfColumns);
+    return CGSizeMake(width, width);
+}
+
 @interface DetailViewController () <PHPhotoLibraryChangeObserver, UICollectionViewDelegateFlowLayout>
 
 @property (strong) PHCachingImageManager *imageManager;
@@ -82,8 +90,8 @@ static CGSize AssetGridThumbnailSize;
     [super viewWillAppear:animated];
     
     CGFloat scale = [UIScreen mainScreen].scale;
-    CGSize cellSize = ((UICollectionViewFlowLayout *)self.collectionViewLayout).itemSize;
-    AssetGridThumbnailSize = CGSizeMake(cellSize.width * scale, cellSize.height * scale);
+    CGSize size = cellSize(self.collectionView);
+    AssetGridThumbnailSize = CGSizeMake(size.width * scale, size.height * scale);
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -158,11 +166,7 @@ static CGSize AssetGridThumbnailSize;
 #pragma mark - UICollectionViewDelegateFlowLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    int numberOfColumns = 3;
-    CGFloat collectionViewWidth = collectionView.frame.size.width;
-    CGFloat spacing = [(id)collectionView.delegate collectionView:collectionView layout:collectionViewLayout minimumInteritemSpacingForSectionAtIndex:indexPath.section];
-    CGFloat width = floorf((collectionViewWidth-spacing*(numberOfColumns+1))/(float)numberOfColumns);
-    return CGSizeMake(width, width);
+    return cellSize(collectionView);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
@@ -312,10 +316,14 @@ static CGSize AssetGridThumbnailSize;
         CGPoint initialPinchPoint = [sender locationInView:self.collectionView];
         NSIndexPath *pinchedCellPath = [self.collectionView indexPathForItemAtPoint:initialPinchPoint];
         layout.pinchedCellPath = pinchedCellPath;
+        DLFPhotoCell *cell = (DLFPhotoCell *)[self.collectionView cellForItemAtIndexPath:pinchedCellPath];
+        [cell setClipsToBounds:NO];
     } else if (sender.state == UIGestureRecognizerStateChanged) {
         layout.pinchedCellScale = sender.scale;
         layout.pinchedCellCenter = [sender locationInView:self.collectionView];
     } else if (sender.state == UIGestureRecognizerStateEnded) {
+        DLFPhotoCell *cell = (DLFPhotoCell *)[self.collectionView cellForItemAtIndexPath:layout.pinchedCellPath];
+        [cell setClipsToBounds:YES];
         layout.pinchedCellPath = nil;
         [self.collectionView performBatchUpdates:^{
             
