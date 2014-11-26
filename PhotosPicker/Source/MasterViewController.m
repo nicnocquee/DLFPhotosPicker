@@ -48,28 +48,25 @@ static NSString * const CollectionSegue = @"showCollection";
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    /*
+    DetailViewController *detailViewController = [[segue.destinationViewController viewControllers] firstObject];
     if ([segue.identifier isEqualToString:AllPhotosSegue]) {
-        AAPLAssetGridViewController *assetGridViewController = segue.destinationViewController;
         // Fetch all assets, sorted by date created.
         PHFetchOptions *options = [[PHFetchOptions alloc] init];
         options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
-        assetGridViewController.assetsFetchResults = [PHAsset fetchAssetsWithOptions:options];
+        detailViewController.assetsFetchResults = [PHAsset fetchAssetsWithOptions:options];
         
     } else if ([segue.identifier isEqualToString:CollectionSegue]) {
-        AAPLAssetGridViewController *assetGridViewController = segue.destinationViewController;
-        
         NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
         PHFetchResult *fetchResult = self.collectionsFetchResults[indexPath.section - 1];
         PHCollection *collection = fetchResult[indexPath.row];
         if ([collection isKindOfClass:[PHAssetCollection class]]) {
             PHAssetCollection *assetCollection = (PHAssetCollection *)collection;
             PHFetchResult *assetsFetchResult = [PHAsset fetchAssetsInAssetCollection:assetCollection options:nil];
-            assetGridViewController.assetsFetchResults = assetsFetchResult;
-            assetGridViewController.assetCollection = assetCollection;
+            detailViewController.assetsFetchResults = assetsFetchResult;
+            detailViewController.assetCollection = assetCollection;
         }
     }
-     */
+    
 }
 
 #pragma mark - UITableViewDataSource

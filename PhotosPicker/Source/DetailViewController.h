@@ -6,10 +6,12 @@
 //  Copyright (c) 2014 Delightful. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
+@import Photos;
 
 @interface DetailViewController : UICollectionViewController
 
-@property (strong, nonatomic) id detailItem;
+@property (strong) PHFetchResult *assetsFetchResults;
+@property (strong) PHAssetCollection *assetCollection;
 
 @end

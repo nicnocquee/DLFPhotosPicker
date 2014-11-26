@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="TT8-oe-3FP">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Detail View Controller-->
@@ -19,14 +20,28 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="MP4-MQ-sK3">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCell" id="MP4-MQ-sK3" customClass="DLFPhotoCell">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PeL-yT-gdO">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        </imageView>
+                                    </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <constraints>
+                                    <constraint firstItem="PeL-yT-gdO" firstAttribute="leading" secondItem="MP4-MQ-sK3" secondAttribute="leadingMargin" constant="-8" id="6uM-Ce-0gm"/>
+                                    <constraint firstItem="PeL-yT-gdO" firstAttribute="top" secondItem="MP4-MQ-sK3" secondAttribute="topMargin" constant="-8" id="EcA-SK-pqe"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="PeL-yT-gdO" secondAttribute="trailing" constant="-8" id="aTP-FM-tJy"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="PeL-yT-gdO" secondAttribute="bottom" constant="-8" id="mDT-LL-08V"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="imageView" destination="PeL-yT-gdO" id="76z-DF-8jV"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -54,12 +69,18 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5eI-i9-Y5R" id="Xuu-47-fEM">
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="vKN-ug-ISy" kind="showDetail" identifier="showAllPhotos" id="IND-92-93T"/>
+                                </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="CollectionCell" id="Fos-NJ-MuY">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Fos-NJ-MuY" id="3KM-em-68Y">
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="vKN-ug-ISy" kind="showDetail" identifier="showCollection" id="pwd-ld-Ahd"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -121,4 +142,7 @@
             <point key="canvasLocation" x="987" y="434"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="pwd-ld-Ahd"/>
+    </inferredMetricsTieBreakers>
 </document>
