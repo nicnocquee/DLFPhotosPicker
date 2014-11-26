@@ -49,10 +49,11 @@ static NSString * const CollectionSegue = @"showCollection";
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     DetailViewController *detailViewController = [[segue.destinationViewController viewControllers] firstObject];
+    PHFetchOptions *options = [[PHFetchOptions alloc] init];
+    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+    options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %d", PHAssetMediaTypeImage];
+    
     if ([segue.identifier isEqualToString:AllPhotosSegue]) {
-        // Fetch all assets, sorted by date created.
-        PHFetchOptions *options = [[PHFetchOptions alloc] init];
-        options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
         detailViewController.assetsFetchResults = [PHAsset fetchAssetsWithOptions:options];
         detailViewController.title = NSLocalizedString(@"All Photos", nil);
     } else if ([segue.identifier isEqualToString:CollectionSegue]) {
@@ -61,7 +62,7 @@ static NSString * const CollectionSegue = @"showCollection";
         PHCollection *collection = fetchResult[indexPath.row];
         if ([collection isKindOfClass:[PHAssetCollection class]]) {
             PHAssetCollection *assetCollection = (PHAssetCollection *)collection;
-            PHFetchResult *assetsFetchResult = [PHAsset fetchAssetsInAssetCollection:assetCollection options:nil];
+            PHFetchResult *assetsFetchResult = [PHAsset fetchAssetsInAssetCollection:assetCollection options:options];
             detailViewController.assetsFetchResults = assetsFetchResult;
             detailViewController.assetCollection = assetCollection;
             detailViewController.title = collection.localizedTitle;

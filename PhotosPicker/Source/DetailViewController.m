@@ -65,6 +65,7 @@ static CGSize AssetGridThumbnailSize;
         
         PHFetchOptions *options = [[PHFetchOptions alloc] init];
         options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+        options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %d", PHAssetMediaTypeImage];
         self.assetsFetchResults = [PHAsset fetchAssetsWithOptions:options];
         
         [self.collectionView reloadData];
