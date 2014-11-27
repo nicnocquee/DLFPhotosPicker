@@ -62,14 +62,17 @@ TouchPointInCell positionInCell(UICollectionViewCell *cell, CGPoint touchPoint) 
     return TouchPointInCellTopRight;
 }
 
-@interface DetailViewController () <PHPhotoLibraryChangeObserver, UICollectionViewDelegateFlowLayout>
+@interface DetailViewController () <PHPhotoLibraryChangeObserver, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate>
 
 @property (strong) PHCachingImageManager *imageManager;
 @property CGRect previousPreheatRect;
 @property (nonatomic, strong, readonly) UIPinchGestureRecognizer *pinchGesture;
 @property (nonatomic, strong, readonly) UILongPressGestureRecognizer *longGesture;
+@property (nonatomic, strong, readonly) UIPanGestureRecognizer *panGesture;
 @property (nonatomic, assign) CGPoint initialLongGesturePoint;
 @property (nonatomic, assign) CGPoint initialLongGestureCellCenter;
+@property (nonatomic, strong) NSIndexPath *currentPannedIndexPath;
+@property (nonatomic, strong) NSMutableSet *selectedIndexPath;
 
 @end
 
@@ -107,6 +110,12 @@ static CGSize AssetGridThumbnailSize;
     
     _longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongGesture:)];
     [self.collectionView addGestureRecognizer:_longGesture];
+    
+    _panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
+    [_panGesture setDelegate:self];
+    [self.collectionView addGestureRecognizer:_panGesture];
+    
+    self.selectedIndexPath = [[NSMutableSet alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -331,7 +340,7 @@ static CGSize AssetGridThumbnailSize;
     return assets;
 }
 
-#pragma mark - UIPinchGestureRecognizer
+#pragma mark - Gestures
 
 - (void)handlePinchGesture:(UIPinchGestureRecognizer *)sender {
     DLFAssetsLayout *layout = (DLFAssetsLayout *)self.collectionView.collectionViewLayout;
@@ -404,6 +413,56 @@ static CGSize AssetGridThumbnailSize;
         } completion:^(BOOL finished) {
             
         }];
+    }
+}
+
+- (void)handlePanGesture:(UIPanGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        [self.collectionView setScrollEnabled:NO];
+    } else if (sender.state == UIGestureRecognizerStateChanged) {
+        CGPoint touchPoint = [sender locationInView:self.collectionView];
+        NSIndexPath *pannedCellPath = [self.collectionView indexPathForItemAtPoint:touchPoint];
+        if (pannedCellPath != self.currentPannedIndexPath) {
+            [self panningDidTouchOnCellWithIndexPath:pannedCellPath];
+            self.currentPannedIndexPath = pannedCellPath;
+        }
+    } else if (sender.state == UIGestureRecognizerStateEnded) {
+        [self.collectionView setScrollEnabled:YES];
+    }
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    if ([gestureRecognizer isEqual:self.panGesture] && [otherGestureRecognizer isEqual:self.collectionView.panGestureRecognizer]){
+        return YES;
+    }
+    return NO;
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    if ([gestureRecognizer isEqual:self.panGesture]) {
+        CGPoint translation = [self.panGesture velocityInView:self.collectionView];
+        return fabs(translation.y) == 0;
+    }
+    return YES;
+}
+
+- (void)panningDidTouchOnCellWithIndexPath:(NSIndexPath *)indexPath {
+    [self toggleSelectedIndexPath:indexPath];
+}
+
+- (void)toggleSelectedIndexPath:(NSIndexPath *)indexPath {
+    BOOL selected = NO;
+    if ([self.selectedIndexPath containsObject:indexPath]) {
+        [self.selectedIndexPath removeObject:indexPath];
+    } else {
+        if (indexPath) {
+            [self.selectedIndexPath addObject:indexPath];
+            selected = YES;
+        }
+    }
+    UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+    if (cell) {
+        [cell setHighlighted:selected];
     }
 }
 
