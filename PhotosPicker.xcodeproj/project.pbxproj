@@ -17,6 +17,7 @@
 		034275851A2556F900B66342 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 034275841A2556F900B66342 /* DetailViewController.m */; };
 		034275C11A25688600B66342 /* DLFPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 034275C01A25688600B66342 /* DLFPhotoCell.m */; };
 		034275C71A25BB1B00B66342 /* DLFAssetsLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 034275C61A25BB1B00B66342 /* DLFAssetsLayout.m */; };
+		034275CA1A26BD7B00B66342 /* DLFPhotosSelectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 034275C91A26BD7B00B66342 /* DLFPhotosSelectionManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,8 @@
 		034275C01A25688600B66342 /* DLFPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLFPhotoCell.m; sourceTree = "<group>"; };
 		034275C51A25BB1B00B66342 /* DLFAssetsLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLFAssetsLayout.h; sourceTree = "<group>"; };
 		034275C61A25BB1B00B66342 /* DLFAssetsLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLFAssetsLayout.m; sourceTree = "<group>"; };
+		034275C81A26BD7B00B66342 /* DLFPhotosSelectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLFPhotosSelectionManager.h; sourceTree = "<group>"; };
+		034275C91A26BD7B00B66342 /* DLFPhotosSelectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLFPhotosSelectionManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +141,8 @@
 				034275C01A25688600B66342 /* DLFPhotoCell.m */,
 				034275C51A25BB1B00B66342 /* DLFAssetsLayout.h */,
 				034275C61A25BB1B00B66342 /* DLFAssetsLayout.m */,
+				034275C81A26BD7B00B66342 /* DLFPhotosSelectionManager.h */,
+				034275C91A26BD7B00B66342 /* DLFPhotosSelectionManager.m */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -247,6 +252,7 @@
 				034275821A2556D800B66342 /* MasterViewController.m in Sources */,
 				0342755A1A25558E00B66342 /* main.m in Sources */,
 				034275851A2556F900B66342 /* DetailViewController.m in Sources */,
+				034275CA1A26BD7B00B66342 /* DLFPhotosSelectionManager.m in Sources */,
 				034275C11A25688600B66342 /* DLFPhotoCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

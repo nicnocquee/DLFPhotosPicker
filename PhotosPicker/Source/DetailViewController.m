@@ -9,6 +9,7 @@
 #import "DetailViewController.h"
 #import "DLFPhotoCell.h"
 #import "DLFAssetsLayout.h"
+#import "DLFPhotosSelectionManager.h"
 
 typedef NS_ENUM(NSInteger, TouchPointInCell) {
     TouchPointInCellTopLeft,
@@ -74,6 +75,7 @@ TouchPointInCell positionInCell(UICollectionViewCell *cell, CGPoint touchPoint) 
 @property (nonatomic, assign) CGPoint initialLongGestureCellCenter;
 @property (nonatomic, strong) NSIndexPath *currentPannedIndexPath;
 @property (nonatomic, strong) NSMutableSet *selectedIndexPath;
+@property (nonatomic, strong) DLFPhotosSelectionManager *selectionManager;
 
 @end
 
@@ -105,6 +107,9 @@ static CGSize AssetGridThumbnailSize;
         
         [self.collectionView reloadData];
     }
+    
+    self.selectionManager = [[DLFPhotosSelectionManager alloc] initWithView:self.view];
+    [self.selectionManager.selectedPhotosView.clearSelectionButton addTarget:self action:@selector(didTapClearButton:) forControlEvents:UIControlEventTouchUpInside];
     
     _pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinchGesture:)];
     [self.collectionView addGestureRecognizer:_pinchGesture];
@@ -145,6 +150,14 @@ static CGSize AssetGridThumbnailSize;
     assetViewController.asset = self.assetsFetchResults[indexPath.item];
     assetViewController.assetCollection = self.assetCollection;
      */
+}
+
+#pragma mark - Button
+
+- (void)didTapClearButton:(id)sender {
+    [self.selectedIndexPath removeAllObjects];
+    [self.selectionManager removeAllAssets];
+    [self.collectionView reloadData];
 }
 
 #pragma mark - PHPhotoLibraryChangeObserver
@@ -476,9 +489,27 @@ static CGSize AssetGridThumbnailSize;
             selected = YES;
         }
     }
-    UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+    DLFPhotoCell *cell = (DLFPhotoCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
     if (cell) {
         [cell setHighlighted:selected];
+    }
+    
+    if (indexPath) {
+        if (selected) {
+            [self.selectionManager addSelectedImage:cell.imageView.image atIndexPath:indexPath];
+            self.collectionView.contentInset = ({
+                UIEdgeInsets inset = self.collectionView.contentInset;
+                inset.bottom = self.selectionManager.selectedPhotosView.frame.size.height;
+                inset;
+            });
+        } else {
+            [self.selectionManager removeAssetAtIndexPath:indexPath];
+            self.collectionView.contentInset = ({
+                UIEdgeInsets inset = self.collectionView.contentInset;
+                inset.bottom = 0;
+                inset;
+            });
+        }
     }
 }
 
