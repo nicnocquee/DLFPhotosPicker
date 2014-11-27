@@ -22,17 +22,16 @@
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
-    [super setHighlighted:highlighted];
-    
     if (!self.highlightedView) {
         UIView *view = [[UIView alloc] initWithFrame:self.imageView.frame];
         [view setBackgroundColor:[UIColor colorWithWhite:1 alpha:0.5]];
+        [view setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
         [view.layer setBorderColor:[UIColor redColor].CGColor];
         [view.layer setBorderWidth:5];
+        view.hidden = YES;
         [self.contentView addSubview:view];
         self.highlightedView = view;
     }
-    
     [self.highlightedView setHidden:!highlighted];
 }
 

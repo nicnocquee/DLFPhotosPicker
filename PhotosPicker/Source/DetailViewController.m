@@ -237,10 +237,14 @@ static CGSize AssetGridThumbnailSize;
                                   if (cell.tag == currentTag) {
                                       cell.thumbnailImage = result;
                                   }
-                                  
                               }];
     
+    [cell setHighlighted:[self.selectedIndexPath containsObject:indexPath]];
     return cell;
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -418,6 +422,7 @@ static CGSize AssetGridThumbnailSize;
 
 - (void)handlePanGesture:(UIPanGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateBegan) {
+        self.currentPannedIndexPath = nil;
         [self.collectionView setScrollEnabled:NO];
     } else if (sender.state == UIGestureRecognizerStateChanged) {
         CGPoint touchPoint = [sender locationInView:self.collectionView];
@@ -427,6 +432,7 @@ static CGSize AssetGridThumbnailSize;
             self.currentPannedIndexPath = pannedCellPath;
         }
     } else if (sender.state == UIGestureRecognizerStateEnded) {
+        self.currentPannedIndexPath = nil;
         [self.collectionView setScrollEnabled:YES];
     }
 }
@@ -441,7 +447,7 @@ static CGSize AssetGridThumbnailSize;
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     if ([gestureRecognizer isEqual:self.panGesture]) {
         CGPoint translation = [self.panGesture velocityInView:self.collectionView];
-        return fabs(translation.y) == 0;
+        return fabs(translation.y) <= AssetGridThumbnailSize.height/3;
     }
     return YES;
 }
