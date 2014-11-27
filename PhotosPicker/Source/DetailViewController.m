@@ -69,6 +69,7 @@ TouchPointInCell positionInCell(UICollectionViewCell *cell, CGPoint touchPoint) 
 @property (nonatomic, strong, readonly) UIPinchGestureRecognizer *pinchGesture;
 @property (nonatomic, strong, readonly) UILongPressGestureRecognizer *longGesture;
 @property (nonatomic, strong, readonly) UIPanGestureRecognizer *panGesture;
+@property (nonatomic, strong, readonly) UITapGestureRecognizer *tapGesture;
 @property (nonatomic, assign) CGPoint initialLongGesturePoint;
 @property (nonatomic, assign) CGPoint initialLongGestureCellCenter;
 @property (nonatomic, strong) NSIndexPath *currentPannedIndexPath;
@@ -114,6 +115,9 @@ static CGSize AssetGridThumbnailSize;
     _panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
     [_panGesture setDelegate:self];
     [self.collectionView addGestureRecognizer:_panGesture];
+    
+    _tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+    [self.collectionView addGestureRecognizer:_tapGesture];
     
     self.selectedIndexPath = [[NSMutableSet alloc] init];
 }
@@ -437,6 +441,12 @@ static CGSize AssetGridThumbnailSize;
     }
 }
 
+- (void)handleTapGesture:(UITapGestureRecognizer *)sender {
+    CGPoint touchPoint = [sender locationInView:self.collectionView];
+    NSIndexPath *tappedCellPath = [self.collectionView indexPathForItemAtPoint:touchPoint];
+    [self toggleSelectedIndexPath:tappedCellPath];
+}
+
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     if ([gestureRecognizer isEqual:self.panGesture] && [otherGestureRecognizer isEqual:self.collectionView.panGestureRecognizer]){
         return YES;
@@ -447,7 +457,7 @@ static CGSize AssetGridThumbnailSize;
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     if ([gestureRecognizer isEqual:self.panGesture]) {
         CGPoint translation = [self.panGesture velocityInView:self.collectionView];
-        return fabs(translation.y) <= AssetGridThumbnailSize.height/3;
+        return fabs(translation.y) <= AssetGridThumbnailSize.height/3 && fabs(translation.x)  >= 10;
     }
     return YES;
 }
