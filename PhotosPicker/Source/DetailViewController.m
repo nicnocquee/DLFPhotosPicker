@@ -76,6 +76,7 @@ TouchPointInCell positionInCell(UICollectionViewCell *cell, CGPoint touchPoint) 
 @property (nonatomic, strong) NSIndexPath *currentPannedIndexPath;
 @property (nonatomic, strong) NSMutableSet *selectedIndexPath;
 @property (nonatomic, strong) DLFPhotosSelectionManager *selectionManager;
+@property (nonatomic, strong) UIBarButtonItem *nextButton;
 
 @end
 
@@ -125,6 +126,11 @@ static CGSize AssetGridThumbnailSize;
     [self.collectionView addGestureRecognizer:_tapGesture];
     
     self.selectedIndexPath = [[NSMutableSet alloc] init];
+    
+    UIBarButtonItem *nextButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Next", nil) style:UIBarButtonItemStyleDone target:self action:@selector(didTapNextButton:)];
+    [self.navigationItem setRightBarButtonItem:nextButton];
+    [nextButton setEnabled:NO];
+    self.nextButton = nextButton;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -158,6 +164,11 @@ static CGSize AssetGridThumbnailSize;
     [self.selectedIndexPath removeAllObjects];
     [self.selectionManager removeAllAssets];
     [self.collectionView reloadData];
+    [self.nextButton setEnabled:NO];
+}
+
+- (void)didTapNextButton:(id)sender {
+    
 }
 
 #pragma mark - PHPhotoLibraryChangeObserver
@@ -511,6 +522,8 @@ static CGSize AssetGridThumbnailSize;
             });
         }
     }
+    
+    [self.nextButton setEnabled:(self.selectedIndexPath.count==0)?NO:YES];
 }
 
 @end
