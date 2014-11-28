@@ -103,10 +103,10 @@ Pod::Spec.new do |s|
   #  non-essential files like tests, examples and documentation.
   #
 
-  #s.resource  = "PhotosPicker/Base.lproj/PhotosPicker.storyboard"
+  s.resource  = "Resources/PhotosPicker.storyboard"
   # s.resources = "Resources/*.png"
-  #s.resources 	 = ['PhotosPicker/**/*.{png,storyboard}']
-  s.resource_bundle = {'DLFPhotosPicker' => "PhotosPicker/Base.lproj/PhotosPicker.storyboard"}
+  # s.resources 	 = ['PhotosPicker/**/*.{png,storyboard}']
+  # s.resource_bundle = {'DLFPhotosPicker' => "PhotosPicker/Base.lproj/PhotosPicker.storyboard"}
 
   # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
