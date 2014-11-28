@@ -52,7 +52,6 @@ static NSString * const CollectionSegue = @"showCollection";
     PHFetchOptions *options = [[PHFetchOptions alloc] init];
     options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
     options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %d", PHAssetMediaTypeImage];
-    
     if ([segue.identifier isEqualToString:AllPhotosSegue]) {
         detailViewController.assetsFetchResults = [PHAsset fetchAssetsWithOptions:options];
         detailViewController.title = NSLocalizedString(@"All Photos", nil);

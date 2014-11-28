@@ -9,7 +9,6 @@
 #import "DetailViewController.h"
 #import "DLFPhotoCell.h"
 #import "DLFAssetsLayout.h"
-#import "DLFPhotosSelectionManager.h"
 
 typedef NS_ENUM(NSInteger, TouchPointInCell) {
     TouchPointInCellTopLeft,
@@ -74,8 +73,6 @@ TouchPointInCell positionInCell(UICollectionViewCell *cell, CGPoint touchPoint) 
 @property (nonatomic, assign) CGPoint initialLongGesturePoint;
 @property (nonatomic, assign) CGPoint initialLongGestureCellCenter;
 @property (nonatomic, strong) NSIndexPath *currentPannedIndexPath;
-@property (nonatomic, strong) NSMutableSet *selectedIndexPath;
-@property (nonatomic, strong) DLFPhotosSelectionManager *selectionManager;
 @property (nonatomic, strong) UIBarButtonItem *nextButton;
 
 @end
@@ -109,8 +106,7 @@ static CGSize AssetGridThumbnailSize;
         [self.collectionView reloadData];
     }
     
-    self.selectionManager = [[DLFPhotosSelectionManager alloc] initWithView:self.view];
-    [self.selectionManager.selectedPhotosView.clearSelectionButton addTarget:self action:@selector(didTapClearButton:) forControlEvents:UIControlEventTouchUpInside];
+    self.selectionManager = [DLFPhotosSelectionManager sharedManager];
     
     _pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinchGesture:)];
     [self.collectionView addGestureRecognizer:_pinchGesture];
@@ -124,8 +120,6 @@ static CGSize AssetGridThumbnailSize;
     
     _tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
     [self.collectionView addGestureRecognizer:_tapGesture];
-    
-    self.selectedIndexPath = [[NSMutableSet alloc] init];
     
     UIBarButtonItem *nextButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Next", nil) style:UIBarButtonItemStyleDone target:self action:@selector(didTapNextButton:)];
     [self.navigationItem setRightBarButtonItem:nextButton];
@@ -146,6 +140,9 @@ static CGSize AssetGridThumbnailSize;
 {
     [super viewDidAppear:animated];
     [self updateCachedAssets];
+    [self.selectionManager addSelectionViewToView:self.view];
+    [self.selectionManager.selectedPhotosView.clearSelectionButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+    [self.selectionManager.selectedPhotosView.clearSelectionButton addTarget:self action:@selector(didTapClearButton:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -161,7 +158,6 @@ static CGSize AssetGridThumbnailSize;
 #pragma mark - Button
 
 - (void)didTapClearButton:(id)sender {
-    [self.selectedIndexPath removeAllObjects];
     [self.selectionManager removeAllAssets];
     [self.collectionView reloadData];
     [self.nextButton setEnabled:NO];
@@ -267,7 +263,7 @@ static CGSize AssetGridThumbnailSize;
                                   }
                               }];
     
-    [cell setHighlighted:[self.selectedIndexPath containsObject:indexPath]];
+    [cell setHighlighted:[self.selectionManager containsAsset:asset]];
     return cell;
 }
 
@@ -492,11 +488,13 @@ static CGSize AssetGridThumbnailSize;
 
 - (void)toggleSelectedIndexPath:(NSIndexPath *)indexPath {
     BOOL selected = NO;
-    if ([self.selectedIndexPath containsObject:indexPath]) {
-        [self.selectedIndexPath removeObject:indexPath];
+    PHAsset *asset = self.assetsFetchResults[indexPath.item];
+    
+    if ([self.selectionManager containsAsset:asset]) {
+        [self.selectionManager removeAsset:asset];
     } else {
         if (indexPath) {
-            [self.selectedIndexPath addObject:indexPath];
+            [self.selectionManager addSelectedAsset:asset];
             selected = YES;
         }
     }
@@ -507,14 +505,12 @@ static CGSize AssetGridThumbnailSize;
     
     if (indexPath) {
         if (selected) {
-            [self.selectionManager addSelectedImage:cell.imageView.image atIndexPath:indexPath];
             self.collectionView.contentInset = ({
                 UIEdgeInsets inset = self.collectionView.contentInset;
                 inset.bottom = self.selectionManager.selectedPhotosView.frame.size.height;
                 inset;
             });
         } else {
-            [self.selectionManager removeAssetAtIndexPath:indexPath];
             self.collectionView.contentInset = ({
                 UIEdgeInsets inset = self.collectionView.contentInset;
                 inset.bottom = 0;
@@ -523,7 +519,7 @@ static CGSize AssetGridThumbnailSize;
         }
     }
     
-    [self.nextButton setEnabled:(self.selectedIndexPath.count==0)?NO:YES];
+    [self.nextButton setEnabled:(self.selectionManager.count==0)?NO:YES];
 }
 
 @end

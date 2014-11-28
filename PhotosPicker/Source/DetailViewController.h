@@ -9,9 +9,12 @@
 @import UIKit;
 @import Photos;
 
+#import "DLFPhotosSelectionManager.h"
+
 @interface DetailViewController : UICollectionViewController
 
 @property (strong) PHFetchResult *assetsFetchResults;
 @property (strong) PHAssetCollection *assetCollection;
+@property (nonatomic, strong) DLFPhotosSelectionManager *selectionManager;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 @import UIKit;
+@import Photos;
 
 @interface DLFPhotosSelectionView : UIView
 
@@ -16,13 +17,19 @@
 
 @interface DLFPhotosSelectionManager : NSObject
 
-- (id)initWithView:(UIView *)view;
++ (id)sharedManager;
 
-- (void)addSelectedImage:(UIImage *)assetImage atIndexPath:(NSIndexPath *)indexPath;
+- (void)addSelectedAsset:(PHAsset *)asset;
 
-- (void)removeAssetAtIndexPath:(NSIndexPath *)indexPath;
+- (void)removeAsset:(PHAsset *)asset;
+
+- (BOOL)containsAsset:(PHAsset *)asset;
+
+- (int)count;
 
 - (void)removeAllAssets;
+
+- (void)addSelectionViewToView:(UIView *)view;
 
 @property (nonatomic, strong, readonly) DLFPhotosSelectionView *selectedPhotosView;
 

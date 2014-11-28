@@ -447,6 +447,7 @@
 				0342757C1A25558F00B66342 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0342757D1A25558F00B66342 /* Build configuration list for PBXNativeTarget "PhotosPickerTests" */ = {
 			isa = XCConfigurationList;
@@ -455,6 +456,7 @@
 				0342757F1A25558F00B66342 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

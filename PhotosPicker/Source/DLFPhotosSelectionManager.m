@@ -10,9 +10,6 @@
 
 #define SELECTED_PHOTOS_VIEW_HEIGHT 84
 
-NSString *assetKey = @"assetKey";
-NSString *indexPathKey = @"indexPathKey";
-
 @interface DLFPhotosSelectionViewCell : UICollectionViewCell
 
 @property (nonatomic, strong) UIImageView *imageView;
@@ -29,9 +26,9 @@ NSString *indexPathKey = @"indexPathKey";
 
 @property (nonatomic, strong) UIButton *clearSelectionButton;
 
-- (void)addAssetWithIndexPath:(NSDictionary *)assetWithIndexPath;
+- (void)addAsset:(PHAsset *)asset;
 
-- (void)removeAssetWithIndexPath:(NSIndexPath *)indexPath;
+- (void)removeAsset:(PHAsset *)asset;
 
 - (void)removeAllAssets;
 
@@ -41,11 +38,21 @@ NSString *indexPathKey = @"indexPathKey";
 
 @property (nonatomic, strong) DLFPhotosSelectionView *selectedPhotosView;
 
-@property (nonatomic, strong) NSMutableDictionary *items;
+@property (nonatomic, strong) NSMutableArray *items;
 
 @end
 
 @implementation DLFPhotosSelectionManager
+
++ (instancetype)sharedManager {
+    static DLFPhotosSelectionManager *_sharedManager = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _sharedManager = [[DLFPhotosSelectionManager alloc] initWithView:nil];
+    });
+    
+    return _sharedManager;
+}
 
 - (id)initWithView:(UIView *)view {
     self = [super init];
@@ -55,25 +62,47 @@ NSString *indexPathKey = @"indexPathKey";
         [view addSubview:self.selectedPhotosView];
         [self.selectedPhotosView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin];
         
-        self.items = [[NSMutableDictionary alloc] init];
+        self.items = [[NSMutableArray alloc] init];
     }
     return self;
 }
 
-- (void)addSelectedImage:(UIImage *)asset atIndexPath:(NSIndexPath *)indexPath {
-    [self.items setObject:asset forKey:indexPath];
-    [self.selectedPhotosView addAssetWithIndexPath:@{assetKey:asset, indexPathKey:indexPath}];
+- (void)addSelectionViewToView:(UIView *)view {
+    [self.selectedPhotosView setFrame:CGRectMake(0, view.frame.size.height - SELECTED_PHOTOS_VIEW_HEIGHT, view.frame.size.width, SELECTED_PHOTOS_VIEW_HEIGHT)];
     
+    [view addSubview:self.selectedPhotosView];
+    [self.selectedPhotosView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin];
+    [self.selectedPhotosView setHidden:(self.items.count==0)];
+}
+
+- (void)addSelectedAssets:(NSArray *)assets {
+    [self.items addObjectsFromArray:assets];
+    for (PHAsset *asset in assets) {
+        [self.selectedPhotosView addAsset:asset];
+    }
     [self.selectedPhotosView setHidden:NO];
 }
 
-- (void)removeAssetAtIndexPath:(NSIndexPath *)indexPath {
-    [self.items removeObjectForKey:indexPath];
-    [self.selectedPhotosView removeAssetWithIndexPath:indexPath];
-    
+- (void)addSelectedAsset:(PHAsset *)asset {
+    [self.items addObject:asset];
+    [self.selectedPhotosView addAsset:asset];
+    [self.selectedPhotosView setHidden:NO];
+}
+
+- (void)removeAsset:(PHAsset *)asset {
+    [self.items removeObject:asset];
+    [self.selectedPhotosView removeAsset:asset];
     if (self.items.count == 0) {
         [self.selectedPhotosView setHidden:YES];
     }
+}
+
+- (BOOL)containsAsset:(PHAsset *)asset {
+    return [self.items containsObject:asset];
+}
+
+- (int)count {
+    return (int)self.items.count;
 }
 
 - (void)removeAllAssets {
@@ -85,7 +114,6 @@ NSString *indexPathKey = @"indexPathKey";
         [self.selectedPhotosView setHidden:YES];
         [self.selectedPhotosView setAlpha:1];
     }];
-    
 }
 
 @end
@@ -136,26 +164,23 @@ NSString *indexPathKey = @"indexPathKey";
     return self;
 }
 
-- (void)addAssetWithIndexPath:(NSDictionary *)assetWithIndexPath {
-    NSInteger index = [self.items indexOfObjectPassingTest:^BOOL(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
-        if (obj[indexPathKey] == assetWithIndexPath[indexPathKey]) {
-            *stop = YES;
-            return YES;
-        }
-        return NO;
-    }];
-    if (index == NSNotFound) {
-        [self.items addObject:assetWithIndexPath];
-        NSIndexPath *ind = [NSIndexPath indexPathForItem:self.items.count-1 inSection:0];
-        [self.collectionView insertItemsAtIndexPaths:@[ind]];
-        
-        [self setNumberOfPhotosText];
-    }
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    [self.collectionView setFrame:CGRectMake(0, 20, self.frame.size.width - CGRectGetWidth(self.clearSelectionButton.frame) - 20, self.frame.size.height-20)];
+    [super layoutSubviews];
 }
 
-- (void)removeAssetWithIndexPath:(NSIndexPath *)indexPath {
-    NSInteger index = [self.items indexOfObjectPassingTest:^BOOL(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
-        if (obj[indexPathKey] == indexPath) {
+- (void)addAsset:(PHAsset *)asset {
+    [self.items addObject:asset];
+    NSIndexPath *ind = [NSIndexPath indexPathForItem:self.items.count-1 inSection:0];
+    [self.collectionView insertItemsAtIndexPaths:@[ind]];
+    
+    [self setNumberOfPhotosText];
+}
+
+- (void)removeAsset:(PHAsset *)asset {
+    NSInteger index = [self.items indexOfObjectPassingTest:^BOOL(PHAsset *obj, NSUInteger idx, BOOL *stop) {
+        if (obj == asset) {
             *stop = YES;
             return YES;
         }
@@ -185,9 +210,23 @@ NSString *indexPathKey = @"indexPathKey";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     DLFPhotosSelectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-    UIImage *asset = [[self.items objectAtIndex:indexPath.item] objectForKey:assetKey];
+    NSInteger currentTag = cell.tag + 1;
+    cell.tag = currentTag;
+    PHAsset *asset = self.items[indexPath.item];
+    [[PHCachingImageManager defaultManager] requestImageForAsset:asset
+                                 targetSize:cell.frame.size
+                                contentMode:PHImageContentModeAspectFill
+                                    options:nil
+                              resultHandler:^(UIImage *result, NSDictionary *info) {
+                                  
+                                  // Only update the thumbnail if the cell tag hasn't changed. Otherwise, the cell has been re-used.
+                                  if (cell.tag == currentTag) {
+                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                          cell.imageView.image = result;
+                                      });
+                                  }
+                              }];
     
-    [cell.imageView setImage:asset];
     return cell;
 }
 
