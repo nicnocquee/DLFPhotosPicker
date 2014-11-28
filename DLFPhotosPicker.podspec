@@ -78,7 +78,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/nicnocquee/DLFPhotosPicker.git", :tag => '0.1' }
+  s.source       = { :git => "https://github.com/nicnocquee/DLFPhotosPicker.git", :tag => "#{s.version}" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -103,8 +103,9 @@ Pod::Spec.new do |s|
   #  non-essential files like tests, examples and documentation.
   #
 
-  s.resource  = "PhotosPicker/Base.lproj/PhotosPicker.storyboard"
+  #s.resource  = "PhotosPicker/Base.lproj/PhotosPicker.storyboard"
   # s.resources = "Resources/*.png"
+  s.resources 	 = ['PhotosPicker/**/*.{png,storyboard}']
 
   # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
