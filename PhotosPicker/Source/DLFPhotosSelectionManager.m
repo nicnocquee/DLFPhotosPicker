@@ -134,6 +134,7 @@
         self.clearSelectionButton.frame = ({
             CGRect selectionFrame = self.clearSelectionButton.frame;
             selectionFrame.origin.x = frame.size.width - CGRectGetWidth(selectionFrame) - 10;
+            selectionFrame.size.height = frame.size.height;
             selectionFrame;
         });
         [self.clearSelectionButton setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin];
@@ -143,6 +144,7 @@
         self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 20, frame.size.width - CGRectGetWidth(self.clearSelectionButton.frame) - 20, frame.size.height-20) collectionViewLayout:layout];
         [self.collectionView setDelegate:self];
         [self.collectionView setDataSource:self];
+        [self.collectionView setScrollsToTop:NO];
         [self.collectionView setAlwaysBounceHorizontal:YES];
         [self.collectionView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleTopMargin];
         [self.collectionView setBackgroundColor:[UIColor clearColor]];
@@ -168,6 +170,13 @@
     [super layoutSubviews];
     [self.collectionView setFrame:CGRectMake(0, 20, self.frame.size.width - CGRectGetWidth(self.clearSelectionButton.frame) - 20, self.frame.size.height-20)];
     [super layoutSubviews];
+    
+    self.clearSelectionButton.frame = ({
+        CGRect selectionFrame = self.clearSelectionButton.frame;
+        selectionFrame.origin.x = self.frame.size.width - CGRectGetWidth(selectionFrame) - 10;
+        selectionFrame.size.height = self.frame.size.height;
+        selectionFrame;
+    });
 }
 
 - (void)addAsset:(PHAsset *)asset {
@@ -180,7 +189,7 @@
 
 - (void)removeAsset:(PHAsset *)asset {
     NSInteger index = [self.items indexOfObjectPassingTest:^BOOL(PHAsset *obj, NSUInteger idx, BOOL *stop) {
-        if (obj == asset) {
+        if (obj == asset || [obj.localIdentifier isEqualToString:asset.localIdentifier]) {
             *stop = YES;
             return YES;
         }
