@@ -114,12 +114,15 @@ static CGSize AssetGridThumbnailSize;
     _longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongGesture:)];
     [self.collectionView addGestureRecognizer:_longGesture];
     
-    _panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
-    [_panGesture setDelegate:self];
-    [self.collectionView addGestureRecognizer:_panGesture];
-    
     _tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
     [self.collectionView addGestureRecognizer:_tapGesture];
+    
+    _panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
+    [_panGesture setDelegate:self];
+    [_panGesture requireGestureRecognizerToFail:_tapGesture];
+    [self.collectionView addGestureRecognizer:_panGesture];
+    
+    [self.navigationController.interactivePopGestureRecognizer requireGestureRecognizerToFail:_panGesture];
     
     UIBarButtonItem *nextButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Next", nil) style:UIBarButtonItemStyleDone target:self action:@selector(didTapNextButton:)];
     [self.navigationItem setRightBarButtonItem:nextButton];
@@ -446,14 +449,17 @@ static CGSize AssetGridThumbnailSize;
 
 - (void)handlePanGesture:(UIPanGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateBegan) {
-        self.currentPannedIndexPath = nil;
+        CGPoint touchPoint = [sender locationInView:self.collectionView];
+        NSIndexPath *pannedCellPath = [self.collectionView indexPathForItemAtPoint:touchPoint];
+        self.currentPannedIndexPath = pannedCellPath;
         [self.collectionView setScrollEnabled:NO];
+        [self panningDidTouchOnCellWithIndexPath:pannedCellPath];
     } else if (sender.state == UIGestureRecognizerStateChanged) {
         CGPoint touchPoint = [sender locationInView:self.collectionView];
         NSIndexPath *pannedCellPath = [self.collectionView indexPathForItemAtPoint:touchPoint];
         if (pannedCellPath != self.currentPannedIndexPath) {
-            [self panningDidTouchOnCellWithIndexPath:pannedCellPath];
             self.currentPannedIndexPath = pannedCellPath;
+            [self panningDidTouchOnCellWithIndexPath:pannedCellPath];
         }
     } else if (sender.state == UIGestureRecognizerStateEnded) {
         self.currentPannedIndexPath = nil;
@@ -468,8 +474,10 @@ static CGSize AssetGridThumbnailSize;
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    if ([gestureRecognizer isEqual:self.panGesture] && [otherGestureRecognizer isEqual:self.collectionView.panGestureRecognizer]){
-        return YES;
+    if ([gestureRecognizer isEqual:self.panGesture]){
+        if ([otherGestureRecognizer isEqual:self.collectionView.panGestureRecognizer] || [otherGestureRecognizer isEqual:self.navigationController.interactivePopGestureRecognizer]) {
+            return YES;
+        }
     }
     return NO;
 }
@@ -520,6 +528,7 @@ static CGSize AssetGridThumbnailSize;
     }
     
     [self.nextButton setEnabled:(self.selectionManager.count==0)?NO:YES];
+    [self.navigationController.interactivePopGestureRecognizer setEnabled:(self.selectionManager.count==0)?YES:NO];
 }
 
 @end

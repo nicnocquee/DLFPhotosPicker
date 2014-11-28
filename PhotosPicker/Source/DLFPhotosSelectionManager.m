@@ -135,6 +135,7 @@
             CGRect selectionFrame = self.clearSelectionButton.frame;
             selectionFrame.origin.x = frame.size.width - CGRectGetWidth(selectionFrame) - 10;
             selectionFrame.size.height = frame.size.height;
+            selectionFrame.size.width += 20;
             selectionFrame;
         });
         [self.clearSelectionButton setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin];
