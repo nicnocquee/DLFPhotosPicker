@@ -18,6 +18,9 @@
 		034275C11A25688600B66342 /* DLFPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 034275C01A25688600B66342 /* DLFPhotoCell.m */; };
 		034275C71A25BB1B00B66342 /* DLFAssetsLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 034275C61A25BB1B00B66342 /* DLFAssetsLayout.m */; };
 		034275CA1A26BD7B00B66342 /* DLFPhotosSelectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 034275C91A26BD7B00B66342 /* DLFPhotosSelectionManager.m */; };
+		03BBA6881A286A3D001F83D6 /* DLFPhotosPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BBA6871A286A3D001F83D6 /* DLFPhotosPickerViewController.m */; };
+		03BBA68A1A286A8B001F83D6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03BBA6891A286A8B001F83D6 /* Main.storyboard */; };
+		03BBA68D1A286ABE001F83D6 /* SampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BBA68C1A286ABE001F83D6 /* SampleViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +55,11 @@
 		034275C61A25BB1B00B66342 /* DLFAssetsLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLFAssetsLayout.m; sourceTree = "<group>"; };
 		034275C81A26BD7B00B66342 /* DLFPhotosSelectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLFPhotosSelectionManager.h; sourceTree = "<group>"; };
 		034275C91A26BD7B00B66342 /* DLFPhotosSelectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLFPhotosSelectionManager.m; sourceTree = "<group>"; };
+		03BBA6861A286A3D001F83D6 /* DLFPhotosPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLFPhotosPickerViewController.h; sourceTree = "<group>"; };
+		03BBA6871A286A3D001F83D6 /* DLFPhotosPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLFPhotosPickerViewController.m; sourceTree = "<group>"; };
+		03BBA6891A286A8B001F83D6 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		03BBA68B1A286ABE001F83D6 /* SampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleViewController.h; sourceTree = "<group>"; };
+		03BBA68C1A286ABE001F83D6 /* SampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +107,9 @@
 				034275691A25558E00B66342 /* LaunchScreen.xib */,
 				034275571A25558E00B66342 /* Supporting Files */,
 				034275861A25570000B66342 /* Source */,
+				03BBA6891A286A8B001F83D6 /* Main.storyboard */,
+				03BBA68B1A286ABE001F83D6 /* SampleViewController.h */,
+				03BBA68C1A286ABE001F83D6 /* SampleViewController.m */,
 			);
 			path = PhotosPicker;
 			sourceTree = "<group>";
@@ -143,6 +154,8 @@
 				034275C61A25BB1B00B66342 /* DLFAssetsLayout.m */,
 				034275C81A26BD7B00B66342 /* DLFPhotosSelectionManager.h */,
 				034275C91A26BD7B00B66342 /* DLFPhotosSelectionManager.m */,
+				03BBA6861A286A3D001F83D6 /* DLFPhotosPickerViewController.h */,
+				03BBA6871A286A3D001F83D6 /* DLFPhotosPickerViewController.m */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -230,6 +243,7 @@
 				034275661A25558E00B66342 /* PhotosPicker.storyboard in Resources */,
 				0342756B1A25558E00B66342 /* LaunchScreen.xib in Resources */,
 				034275681A25558E00B66342 /* Images.xcassets in Resources */,
+				03BBA68A1A286A8B001F83D6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,11 +263,13 @@
 			files = (
 				0342755D1A25558E00B66342 /* AppDelegate.m in Sources */,
 				034275C71A25BB1B00B66342 /* DLFAssetsLayout.m in Sources */,
+				03BBA6881A286A3D001F83D6 /* DLFPhotosPickerViewController.m in Sources */,
 				034275821A2556D800B66342 /* MasterViewController.m in Sources */,
 				0342755A1A25558E00B66342 /* main.m in Sources */,
 				034275851A2556F900B66342 /* DetailViewController.m in Sources */,
 				034275CA1A26BD7B00B66342 /* DLFPhotosSelectionManager.m in Sources */,
 				034275C11A25688600B66342 /* DLFPhotoCell.m in Sources */,
+				03BBA68D1A286ABE001F83D6 /* SampleViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

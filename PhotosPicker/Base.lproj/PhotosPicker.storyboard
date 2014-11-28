@@ -110,10 +110,10 @@
             </objects>
             <point key="canvasLocation" x="987" y="-416"/>
         </scene>
-        <!--Split View Controller-->
+        <!--Photos Picker View Controller-->
         <scene sceneID="GJR-Or-Pby">
             <objects>
-                <splitViewController id="TT8-oe-3FP" sceneMemberID="viewController">
+                <splitViewController id="TT8-oe-3FP" customClass="DLFPhotosPickerViewController" sceneMemberID="viewController">
                     <connections>
                         <segue destination="TtI-Z1-11H" kind="relationship" relationship="masterViewController" id="dQ6-T3-HKl"/>
                         <segue destination="vKN-ug-ISy" kind="relationship" relationship="detailViewController" id="yc6-OX-QyT"/>
