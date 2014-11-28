@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 Delightful. All rights reserved.
 //
 
-#import "MasterViewController.h"
-#import "DetailViewController.h"
+#import "DLFMasterViewController.h"
+#import "DLFDetailViewController.h"
 #import <Photos/Photos.h>
 
-@interface MasterViewController () <PHPhotoLibraryChangeObserver>
+@interface DLFMasterViewController () <PHPhotoLibraryChangeObserver>
 
 @property NSMutableArray *objects;
 
@@ -19,7 +19,7 @@
 
 @end
 
-@implementation MasterViewController
+@implementation DLFMasterViewController
 
 static NSString * const AllPhotosReuseIdentifier = @"AllPhotosCell";
 static NSString * const CollectionCellReuseIdentifier = @"CollectionCell";
@@ -48,7 +48,7 @@ static NSString * const CollectionSegue = @"showCollection";
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    DetailViewController *detailViewController = [[segue.destinationViewController viewControllers] firstObject];
+    DLFDetailViewController *detailViewController = [[segue.destinationViewController viewControllers] firstObject];
     PHFetchOptions *options = [[PHFetchOptions alloc] init];
     options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
     options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %d", PHAssetMediaTypeImage];

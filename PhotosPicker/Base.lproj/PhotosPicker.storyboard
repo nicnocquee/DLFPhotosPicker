@@ -8,7 +8,7 @@
         <!--Detail View Controller-->
         <scene sceneID="xZ2-LZ-21i">
             <objects>
-                <collectionViewController id="p87-Bp-8aJ" customClass="DetailViewController" sceneMemberID="viewController">
+                <collectionViewController id="p87-Bp-8aJ" customClass="DLFDetailViewController" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" id="bTL-Pa-5GJ">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -58,7 +58,7 @@
         <!--Root View Controller-->
         <scene sceneID="hb4-v3-3RQ">
             <objects>
-                <tableViewController clearsSelectionOnViewWillAppear="NO" id="9Bu-DL-nTq" customClass="MasterViewController" sceneMemberID="viewController">
+                <tableViewController clearsSelectionOnViewWillAppear="NO" id="9Bu-DL-nTq" customClass="DLFMasterViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="2eH-Lv-tOC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -143,6 +143,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="yc6-OX-QyT"/>
+        <segue reference="pwd-ld-Ahd"/>
     </inferredMetricsTieBreakers>
 </document>

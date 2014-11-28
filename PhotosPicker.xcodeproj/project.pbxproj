@@ -13,8 +13,8 @@
 		034275681A25558E00B66342 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 034275671A25558E00B66342 /* Images.xcassets */; };
 		0342756B1A25558E00B66342 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 034275691A25558E00B66342 /* LaunchScreen.xib */; };
 		034275771A25558F00B66342 /* PhotosPickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 034275761A25558F00B66342 /* PhotosPickerTests.m */; };
-		034275821A2556D800B66342 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 034275811A2556D800B66342 /* MasterViewController.m */; };
-		034275851A2556F900B66342 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 034275841A2556F900B66342 /* DetailViewController.m */; };
+		034275821A2556D800B66342 /* DLFMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 034275811A2556D800B66342 /* DLFMasterViewController.m */; };
+		034275851A2556F900B66342 /* DLFDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 034275841A2556F900B66342 /* DLFDetailViewController.m */; };
 		034275C11A25688600B66342 /* DLFPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 034275C01A25688600B66342 /* DLFPhotoCell.m */; };
 		034275C71A25BB1B00B66342 /* DLFAssetsLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 034275C61A25BB1B00B66342 /* DLFAssetsLayout.m */; };
 		034275CA1A26BD7B00B66342 /* DLFPhotosSelectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 034275C91A26BD7B00B66342 /* DLFPhotosSelectionManager.m */; };
@@ -45,10 +45,10 @@
 		034275701A25558F00B66342 /* PhotosPickerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotosPickerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		034275751A25558F00B66342 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		034275761A25558F00B66342 /* PhotosPickerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotosPickerTests.m; sourceTree = "<group>"; };
-		034275801A2556D800B66342 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
-		034275811A2556D800B66342 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
-		034275831A2556F900B66342 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
-		034275841A2556F900B66342 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		034275801A2556D800B66342 /* DLFMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLFMasterViewController.h; sourceTree = "<group>"; };
+		034275811A2556D800B66342 /* DLFMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLFMasterViewController.m; sourceTree = "<group>"; };
+		034275831A2556F900B66342 /* DLFDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLFDetailViewController.h; sourceTree = "<group>"; };
+		034275841A2556F900B66342 /* DLFDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLFDetailViewController.m; sourceTree = "<group>"; };
 		034275BF1A25688600B66342 /* DLFPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLFPhotoCell.h; sourceTree = "<group>"; };
 		034275C01A25688600B66342 /* DLFPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLFPhotoCell.m; sourceTree = "<group>"; };
 		034275C51A25BB1B00B66342 /* DLFAssetsLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLFAssetsLayout.h; sourceTree = "<group>"; };
@@ -144,10 +144,10 @@
 			isa = PBXGroup;
 			children = (
 				034275641A25558E00B66342 /* PhotosPicker.storyboard */,
-				034275801A2556D800B66342 /* MasterViewController.h */,
-				034275811A2556D800B66342 /* MasterViewController.m */,
-				034275831A2556F900B66342 /* DetailViewController.h */,
-				034275841A2556F900B66342 /* DetailViewController.m */,
+				034275801A2556D800B66342 /* DLFMasterViewController.h */,
+				034275811A2556D800B66342 /* DLFMasterViewController.m */,
+				034275831A2556F900B66342 /* DLFDetailViewController.h */,
+				034275841A2556F900B66342 /* DLFDetailViewController.m */,
 				034275BF1A25688600B66342 /* DLFPhotoCell.h */,
 				034275C01A25688600B66342 /* DLFPhotoCell.m */,
 				034275C51A25BB1B00B66342 /* DLFAssetsLayout.h */,
@@ -264,9 +264,9 @@
 				0342755D1A25558E00B66342 /* AppDelegate.m in Sources */,
 				034275C71A25BB1B00B66342 /* DLFAssetsLayout.m in Sources */,
 				03BBA6881A286A3D001F83D6 /* DLFPhotosPickerViewController.m in Sources */,
-				034275821A2556D800B66342 /* MasterViewController.m in Sources */,
+				034275821A2556D800B66342 /* DLFMasterViewController.m in Sources */,
 				0342755A1A25558E00B66342 /* main.m in Sources */,
-				034275851A2556F900B66342 /* DetailViewController.m in Sources */,
+				034275851A2556F900B66342 /* DLFDetailViewController.m in Sources */,
 				034275CA1A26BD7B00B66342 /* DLFPhotosSelectionManager.m in Sources */,
 				034275C11A25688600B66342 /* DLFPhotoCell.m in Sources */,
 				03BBA68D1A286ABE001F83D6 /* SampleViewController.m in Sources */,

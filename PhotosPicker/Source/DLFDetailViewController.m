@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Delightful. All rights reserved.
 //
 
-#import "DetailViewController.h"
+#import "DLFDetailViewController.h"
 #import "DLFPhotoCell.h"
 #import "DLFAssetsLayout.h"
 
@@ -62,7 +62,7 @@ TouchPointInCell positionInCell(UICollectionViewCell *cell, CGPoint touchPoint) 
     return TouchPointInCellTopRight;
 }
 
-@interface DetailViewController () <PHPhotoLibraryChangeObserver, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate>
+@interface DLFDetailViewController () <PHPhotoLibraryChangeObserver, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate>
 
 @property (strong) PHCachingImageManager *imageManager;
 @property CGRect previousPreheatRect;
@@ -77,7 +77,7 @@ TouchPointInCell positionInCell(UICollectionViewCell *cell, CGPoint touchPoint) 
 
 @end
 
-@implementation DetailViewController
+@implementation DLFDetailViewController
 
 static NSString * const CellReuseIdentifier = @"photoCell";
 static CGSize AssetGridThumbnailSize;

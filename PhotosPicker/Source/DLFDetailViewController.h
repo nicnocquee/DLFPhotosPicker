@@ -11,7 +11,7 @@
 
 #import "DLFPhotosSelectionManager.h"
 
-@interface DetailViewController : UICollectionViewController
+@interface DLFDetailViewController : UICollectionViewController
 
 @property (strong) PHFetchResult *assetsFetchResults;
 @property (strong) PHAssetCollection *assetCollection;
