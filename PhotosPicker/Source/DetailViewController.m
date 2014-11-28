@@ -406,6 +406,7 @@ static CGSize AssetGridThumbnailSize;
             layout.pinchedCellPath = pinchedCellPath;
             layout.pinchedCellScale = 2.5;
             DLFPhotoCell *cell = (DLFPhotoCell *)[self.collectionView cellForItemAtIndexPath:pinchedCellPath];
+            [cell setHighlighted:NO];
             CGPoint pointInCollectionView = [sender locationInView:self.collectionView];
             CGPoint pointInCell = [sender locationInView:cell];
             TouchPointInCell position = positionInCell(cell, pointInCell);
@@ -437,8 +438,15 @@ static CGSize AssetGridThumbnailSize;
         layout.pinchedCellCenter = CGPointMake(self.initialLongGestureCellCenter.x+deltaX, self.initialLongGestureCellCenter.y+deltaY);
     } else if (sender.state == UIGestureRecognizerStateEnded) {
         DLFPhotoCell *cell = (DLFPhotoCell *)[self.collectionView cellForItemAtIndexPath:layout.pinchedCellPath];
+        BOOL selected = NO;
+        PHAsset *asset = self.assetsFetchResults[layout.pinchedCellPath.item];
+        
+        if ([self.selectionManager containsAsset:asset]) {
+            selected = YES;
+        }
         layout.pinchedCellPath = nil;
         [cell setClipsToBounds:YES];
+        [cell setHighlighted:selected];
         [self.collectionView performBatchUpdates:^{
             
         } completion:^(BOOL finished) {
