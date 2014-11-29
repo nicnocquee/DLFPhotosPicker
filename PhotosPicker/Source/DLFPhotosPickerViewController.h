@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @class DLFPhotosPickerViewController;
+@class DLFDetailViewController;
 
 @protocol DLFPhotosPickerViewControllerDelegate <NSObject>
 
 @optional
-- (void)photosPicker:(DLFPhotosPickerViewController *)photosPicker didSelectPhotos:(NSArray *)photos;
+- (void)photosPicker:(DLFPhotosPickerViewController *)photosPicker detailViewController:(DLFDetailViewController *)detailViewController didSelectPhotos:(NSArray *)photos;
 - (void)photosPickerDidCancel:(DLFPhotosPickerViewController *)photosPicker;
 
 @end

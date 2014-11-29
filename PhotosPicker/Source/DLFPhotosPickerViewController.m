@@ -75,8 +75,8 @@ separateSecondaryViewControllerFromPrimaryViewController:(UINavigationController
 #pragma mark - DLFDetailViewControllerDelegate
 
 - (void)detailViewController:(DLFDetailViewController *)detailViewController didTapNextButton:(UIButton *)nextButton photos:(NSArray *)photos {
-    if (self.photosPickerDelegate && [self.photosPickerDelegate respondsToSelector:@selector(photosPicker:didSelectPhotos:)]) {
-        [self.photosPickerDelegate photosPicker:self didSelectPhotos:photos];
+    if (self.photosPickerDelegate && [self.photosPickerDelegate respondsToSelector:@selector(photosPicker:detailViewController:didSelectPhotos:)]) {
+        [self.photosPickerDelegate photosPicker:self detailViewController:detailViewController didSelectPhotos:photos];
     }
 }
 
