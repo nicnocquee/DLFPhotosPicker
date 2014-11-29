@@ -32,6 +32,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     if (self.viewControllers.count > 1) {
         UINavigationController *firstVC = [self.viewControllers firstObject];
         UINavigationController *secondVC = [self.viewControllers lastObject];
