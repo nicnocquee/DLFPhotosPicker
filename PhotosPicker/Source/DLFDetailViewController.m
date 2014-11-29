@@ -137,11 +137,7 @@ static CGSize AssetGridThumbnailSize;
     CGFloat scale = [UIScreen mainScreen].scale;
     CGSize size = cellSize(self.collectionView);
     AssetGridThumbnailSize = CGSizeMake(size.width * scale, size.height * scale);
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
+    
     [self updateCachedAssets];
     [self.selectionManager addSelectionViewToView:self.view];
     [self.selectionManager.selectedPhotosView.clearSelectionButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
