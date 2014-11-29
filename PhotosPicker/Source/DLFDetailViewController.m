@@ -125,7 +125,12 @@ static CGSize AssetGridThumbnailSize;
     [self.navigationController.interactivePopGestureRecognizer requireGestureRecognizerToFail:_panGesture];
     
     UIBarButtonItem *nextButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Next", nil) style:UIBarButtonItemStyleDone target:self action:@selector(didTapNextButton:)];
-    [self.navigationItem setRightBarButtonItem:nextButton];
+    UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
+    [infoButton addTarget:self action:@selector(didTapHintButton:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *hintButton = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
+    UIBarButtonItem *spaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    spaceItem.width = 20;
+    [self.navigationItem setRightBarButtonItems:@[nextButton, spaceItem, hintButton]];
     [nextButton setEnabled:NO];
     self.nextButton = nextButton;
 }
@@ -144,22 +149,29 @@ static CGSize AssetGridThumbnailSize;
     [self.selectionManager.selectedPhotosView.clearSelectionButton addTarget:self action:@selector(didTapClearButton:) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    /*
-    NSIndexPath *indexPath = [self.collectionView indexPathForCell:sender];
-    AAPLAssetViewController *assetViewController = segue.destinationViewController;
-    assetViewController.asset = self.assetsFetchResults[indexPath.item];
-    assetViewController.assetCollection = self.assetCollection;
-     */
-}
-
 #pragma mark - Button
 
 - (void)didTapClearButton:(id)sender {
     [self.selectionManager removeAllAssets];
     [self.collectionView reloadData];
     [self.nextButton setEnabled:NO];
+}
+
+- (void)didTapHintButton:(id)sender {
+    NSString *message = NSLocalizedString(@"Slide to left or right to quickly select multiple photos. Give it a try!", nil);
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Slide to Select", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        
+    }];
+    [alert addAction:action];
+    
+    NSString *message2 = NSLocalizedString(@"Tap and hold a photo to zoom in", nil);
+    UIAlertController *alert2 = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Long Tap Gesture", nil) message:message2 preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:NSLocalizedString(@"Next", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self presentViewController:alert animated:YES completion:nil];
+    }];
+    [alert2 addAction:action2];
+    [self presentViewController:alert2 animated:YES completion:nil];
 }
 
 - (void)didTapNextButton:(id)sender {
