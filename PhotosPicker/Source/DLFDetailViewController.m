@@ -257,8 +257,6 @@ static CGSize AssetGridThumbnailSize;
                                 contentMode:PHImageContentModeAspectFill
                                     options:nil
                               resultHandler:^(UIImage *result, NSDictionary *info) {
-                                  
-                                  // Only update the thumbnail if the cell tag hasn't changed. Otherwise, the cell has been re-used.
                                   if (cell.tag == currentTag) {
                                       cell.thumbnailImage = result;
                                   }

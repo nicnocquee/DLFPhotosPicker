@@ -29,7 +29,16 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    
+    if (self.viewControllers.count > 1) {
+        UINavigationController *firstVC = [self.viewControllers firstObject];
+        UINavigationController *secondVC = [self.viewControllers lastObject];
+        
+        DLFMasterViewController *masterVC = [firstVC.viewControllers firstObject];
+        DLFDetailViewController *detailVC = [secondVC.viewControllers firstObject];
+        
+        [masterVC setDelegate:self];
+        [detailVC setDelegate:self];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
