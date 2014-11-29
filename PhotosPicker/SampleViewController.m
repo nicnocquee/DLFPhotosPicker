@@ -48,4 +48,9 @@
     [photosPicker dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)photosPicker:(DLFPhotosPickerViewController *)photosPicker didSelectPhotos:(NSArray *)photos {
+    NSLog(@"selected %d photos", photos.count);
+    [photosPicker dismissViewControllerAnimated:YES completion:nil];
+}
+
 @end

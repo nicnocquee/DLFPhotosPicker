@@ -11,7 +11,7 @@
 #import "DLFMasterViewController.h"
 #import "DLFDetailViewController.h"
 
-@interface DLFPhotosPickerViewController () <DLFMasterViewControllerDelegate>
+@interface DLFPhotosPickerViewController () <DLFMasterViewControllerDelegate, DLFDetailViewControllerDelegate>
 
 @end
 
@@ -40,37 +40,21 @@
 #pragma mark - UISplitViewControllerDelegate
 
 - (BOOL)splitViewController:(UISplitViewController *)splitViewController
-         showViewController:(UIViewController *)vc
+   showDetailViewController:(UINavigationController *)vc
                      sender:(id)sender {
-    NSLog(@"showing master");
+    DLFDetailViewController *controller1 = [vc.viewControllers firstObject];
+    controller1.delegate = self;
     return NO;
-}
-
-- (BOOL)splitViewController:(UISplitViewController *)splitViewController
-   showDetailViewController:(UIViewController *)vc
-                     sender:(id)sender {
-    NSLog(@"showing detail");
-    return NO;
-}
-
-- (UIViewController *)primaryViewControllerForCollapsingSplitViewController:(UISplitViewController *)splitViewController {
-    NSLog(@"returning primary view controller");
-    return nil;
 }
 
 - (BOOL)splitViewController:(UISplitViewController *)splitViewController
 collapseSecondaryViewController:(UINavigationController *)secondaryViewController
   ontoPrimaryViewController:(UINavigationController *)primaryViewController {
-    UIViewController *controller1 = [secondaryViewController.viewControllers firstObject];
+    DLFDetailViewController *controller1 = [secondaryViewController.viewControllers firstObject];
     DLFMasterViewController *controller2 = [primaryViewController.viewControllers firstObject];
+    controller1.delegate = self;
     controller2.delegate = self;
-    NSLog(@"collapseSecondaryViewController %@ primaryviewcontroller %@", NSStringFromClass(controller1.class), NSStringFromClass(controller2.class));
     return NO;
-}
-
-- (UIViewController *)primaryViewControllerForExpandingSplitViewController:(UISplitViewController *)splitViewController {
-    NSLog(@"primaryViewControllerForExpandingSplitViewController");
-    return nil;
 }
 
 - (UIViewController *)splitViewController:(UISplitViewController *)splitViewController
@@ -83,10 +67,16 @@ separateSecondaryViewControllerFromPrimaryViewController:(UINavigationController
 #pragma mark - DLFMasterViewControllerDelegate
 
 - (void)masterViewController:(DLFMasterViewController *)masterViewController didTapCancelButton:(UIButton *)sender {
-    NSLog(@"tap on cancel");
-    
     if (self.photosPickerDelegate && [self.photosPickerDelegate respondsToSelector:@selector(photosPickerDidCancel:)]) {
         [self.photosPickerDelegate photosPickerDidCancel:self];
+    }
+}
+
+#pragma mark - DLFDetailViewControllerDelegate
+
+- (void)detailViewController:(DLFDetailViewController *)detailViewController didTapNextButton:(UIButton *)nextButton photos:(NSArray *)photos {
+    if (self.photosPickerDelegate && [self.photosPickerDelegate respondsToSelector:@selector(photosPicker:didSelectPhotos:)]) {
+        [self.photosPickerDelegate photosPicker:self didSelectPhotos:photos];
     }
 }
 

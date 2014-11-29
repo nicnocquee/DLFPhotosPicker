@@ -11,10 +11,20 @@
 
 #import "DLFPhotosSelectionManager.h"
 
+@class DLFDetailViewController;
+
+@protocol DLFDetailViewControllerDelegate <NSObject>
+
+@optional
+- (void)detailViewController:(DLFDetailViewController *)detailViewController didTapNextButton:(UIButton *)nextButton photos:(NSArray *)photos;
+
+@end
+
 @interface DLFDetailViewController : UICollectionViewController
 
 @property (strong) PHFetchResult *assetsFetchResults;
 @property (strong) PHAssetCollection *assetCollection;
 @property (nonatomic, strong) DLFPhotosSelectionManager *selectionManager;
+@property (nonatomic, weak) id<DLFDetailViewControllerDelegate> delegate;
 
 @end

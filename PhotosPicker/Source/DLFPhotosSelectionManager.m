@@ -75,6 +75,10 @@
     [self.selectedPhotosView setHidden:(self.items.count==0)];
 }
 
+- (NSArray *)selectedAssets {
+    return self.items;
+}
+
 - (void)addSelectedAssets:(NSArray *)assets {
     [self.items addObjectsFromArray:assets];
     for (PHAsset *asset in assets) {

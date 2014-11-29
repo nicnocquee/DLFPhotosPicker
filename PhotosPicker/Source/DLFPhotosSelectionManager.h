@@ -29,6 +29,8 @@
 
 - (void)removeAllAssets;
 
+- (NSArray *)selectedAssets;
+
 - (void)addSelectionViewToView:(UIView *)view;
 
 @property (nonatomic, strong, readonly) DLFPhotosSelectionView *selectedPhotosView;

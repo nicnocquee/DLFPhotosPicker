@@ -167,7 +167,9 @@ static CGSize AssetGridThumbnailSize;
 }
 
 - (void)didTapNextButton:(id)sender {
-    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(detailViewController:didTapNextButton:photos:)]) {
+        [self.delegate detailViewController:self didTapNextButton:sender photos:self.selectionManager.selectedAssets];
+    }
 }
 
 #pragma mark - PHPhotoLibraryChangeObserver
