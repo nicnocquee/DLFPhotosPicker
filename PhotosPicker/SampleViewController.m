@@ -10,7 +10,7 @@
 
 #import "DLFPhotosPickerViewController.h"
 
-@interface SampleViewController ()
+@interface SampleViewController () <DLFPhotosPickerViewControllerDelegate>
 
 @end
 
@@ -38,6 +38,14 @@
 
 - (IBAction)didTapPickPhotos:(id)sender {
     DLFPhotosPickerViewController *photosPicker = [[UIStoryboard storyboardWithName:@"PhotosPicker" bundle:nil] instantiateInitialViewController];
+    [photosPicker setPhotosPickerDelegate:self];
     [self presentViewController:photosPicker animated:YES completion:nil];
 }
+
+#pragma mark - DLFPhotosPickerViewControllerDelegate
+
+- (void)photosPickerDidCancel:(DLFPhotosPickerViewController *)photosPicker {
+    [photosPicker dismissViewControllerAnimated:YES completion:nil];
+}
+
 @end

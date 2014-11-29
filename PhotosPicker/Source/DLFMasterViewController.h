@@ -8,6 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@class DLFMasterViewController;
+
+@protocol DLFMasterViewControllerDelegate <NSObject>
+
+@optional
+- (void)masterViewController:(DLFMasterViewController *)masterViewController didTapCancelButton:(UIButton *)sender;
+
+@end
+
 @interface DLFMasterViewController : UITableViewController
+
+@property (nonatomic, weak) id<DLFMasterViewControllerDelegate> delegate;
 
 @end

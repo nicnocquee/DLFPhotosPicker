@@ -37,11 +37,20 @@ static NSString * const CollectionSegue = @"showCollection";
     [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
     
     self.title = NSLocalizedString(@"Albums", nil);
+    
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", nil) style:UIBarButtonItemStyleDone target:self action:@selector(didTapCancelButton:)];
+    [self.navigationItem setLeftBarButtonItem:cancelButton];
 }
 
 - (void)dealloc
 {
     [[PHPhotoLibrary sharedPhotoLibrary] unregisterChangeObserver:self];
+}
+
+- (void)didTapCancelButton:(id)sender {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(masterViewController:didTapCancelButton:)]) {
+        [self.delegate masterViewController:self didTapCancelButton:sender];
+    }
 }
 
 #pragma mark - UIViewController
