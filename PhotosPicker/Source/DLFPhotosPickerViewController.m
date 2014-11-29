@@ -10,6 +10,7 @@
 
 #import "DLFMasterViewController.h"
 #import "DLFDetailViewController.h"
+#import "DLFPhotosSelectionManager.h"
 
 @interface DLFPhotosPickerViewController () <DLFMasterViewControllerDelegate, DLFDetailViewControllerDelegate>
 
@@ -24,6 +25,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    [[DLFPhotosSelectionManager sharedManager] removeAllAssets];
     
     self.delegate = self;
 }
