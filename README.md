@@ -1,0 +1,59 @@
+This is a library to select multiple photos in iOS 8 or later using iOS Photos framework.
+
+Features:
+-
+
+- Tap and hold a photo to preview (zoom).
+- Pinch out a photo to preview (zoom).
+- Drag to select multiple photos quickly. Simply drag to left or right to start selecting multiple photos.
+- Works on both landscape and portrait.
+- Using iOS 8's UISplitViewController for albums and photos. You can see the split view on iPhone 6 plus landscape.
+- Quickly clear all selections.
+- Selected photos are retained when changing album.
+
+How to use
+-
+
+- Copy all the files in `Source` folder **and** `PhotosPicker.storyboard` inside Base.lproj to your project.
+- Present the `DLFPhotosPickerViewController`
+
+		DLFPhotosPickerViewController *picker = [[UIStoryboard storyboardWithName:@"PhotosPicker" bundle:nil] instantiateInitialViewController];
+    	[picker setPhotosPickerDelegate:self];
+    	[self presentViewController:picker animated:YES completion:nil];
+
+- Implement the delegate methods
+
+		#pragma mark - DLFPhotosPickerViewControllerDelegate
+
+		- (void)photosPickerDidCancel:(DLFPhotosPickerViewController *)photosPicker {
+    		[photosPicker dismissViewControllerAnimated:YES completion:nil];
+		}
+
+		- (void)photosPicker:(DLFPhotosPickerViewController *)photosPicker detailViewController:(DLFDetailViewController *)detailViewController didSelectPhotos:(NSArray *)photos {
+    		NSLog(@"selected %d photos", photos.count);
+    		[photosPicker dismissViewControllerAnimated:YES completion:nil];
+		}
+
+- You can check the `SampleViewController` class.
+		
+Cocoapods
+-
+
+Coming soon. As soon as I figure out how to include `PhotosPicker.storyboard` in the pod. Anybody knows how to do this?
+
+Screenshots
+-
+
+![](https://raw.githubusercontent.com/nicnocquee/DLFPhotosPicker/master/screenshots/iOS%20Simulator%20Screen%20Shot%20Nov%2030,%202014,%2009.39.04.png)
+
+![](https://raw.githubusercontent.com/nicnocquee/DLFPhotosPicker/master/screenshots/iOS%20Simulator%20Screen%20Shot%20Nov%2030,%202014,%2009.38.27.png)
+
+![](https://raw.githubusercontent.com/nicnocquee/DLFPhotosPicker/master/screenshots/iOS%20Simulator%20Screen%20Shot%20Nov%2030,%202014,%2009.38.34.png)
+
+![](https://raw.githubusercontent.com/nicnocquee/DLFPhotosPicker/master/screenshots/iOS%20Simulator%20Screen%20Shot%20Nov%2030,%202014,%2009.38.58.png)
+
+
+License
+-
+
+MIT.
