@@ -48,9 +48,9 @@ Screenshots
 
 ![](https://raw.githubusercontent.com/nicnocquee/DLFPhotosPicker/master/screenshots/iOS%20Simulator%20Screen%20Shot%20Nov%2030,%202014,%2009.38.27.png)
 
-![](https://raw.githubusercontent.com/nicnocquee/DLFPhotosPicker/master/screenshots/iOS%20Simulator%20Screen%20Shot%20Nov%2030,%202014,%2009.38.34.png)
-
 ![](https://raw.githubusercontent.com/nicnocquee/DLFPhotosPicker/master/screenshots/iOS%20Simulator%20Screen%20Shot%20Nov%2030,%202014,%2009.38.58.png)
+
+![](https://raw.githubusercontent.com/nicnocquee/DLFPhotosPicker/master/screenshots/iOS%20Simulator%20Screen%20Shot%20Nov%2030,%202014,%2009.38.34.png)
 
 
 License
