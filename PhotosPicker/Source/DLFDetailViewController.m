@@ -45,9 +45,18 @@ typedef NS_ENUM(NSInteger, TouchPointInCell) {
 
 CGSize cellSize(UICollectionView *collectionView) {
     int numberOfColumns = 3;
-    CGFloat collectionViewWidth = collectionView.frame.size.width;
-    CGFloat spacing = [(id)collectionView.delegate collectionView:collectionView layout:collectionView.collectionViewLayout minimumInteritemSpacingForSectionAtIndex:0];
-    CGFloat width = floorf((collectionViewWidth-spacing*(numberOfColumns+1))/(float)numberOfColumns);
+    
+    // this is to fix jerky scrolling in iPhone 6 plus
+    if ([[UIScreen mainScreen] scale] > 2) {
+        numberOfColumns = 4;
+    }
+    // end of fix
+    static CGFloat width;
+    if (width == 0) {
+        CGFloat collectionViewWidth = collectionView.frame.size.width;
+        CGFloat spacing = [(id)collectionView.delegate collectionView:collectionView layout:collectionView.collectionViewLayout minimumInteritemSpacingForSectionAtIndex:0];
+        width = floorf((collectionViewWidth-spacing*(numberOfColumns-1))/(float)numberOfColumns);
+    }
     return CGSizeMake(width, width);
 }
 
