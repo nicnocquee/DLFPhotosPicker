@@ -51,12 +51,10 @@ CGSize cellSize(UICollectionView *collectionView) {
         numberOfColumns = 4;
     }
     // end of fix
-    static CGFloat width;
-    if (width == 0) {
-        CGFloat collectionViewWidth = collectionView.frame.size.width;
-        CGFloat spacing = [(id)collectionView.delegate collectionView:collectionView layout:collectionView.collectionViewLayout minimumInteritemSpacingForSectionAtIndex:0];
-        width = floorf((collectionViewWidth-spacing*(numberOfColumns-1))/(float)numberOfColumns);
-    }
+    
+    CGFloat collectionViewWidth = collectionView.frame.size.width;
+    CGFloat spacing = [(id)collectionView.delegate collectionView:collectionView layout:collectionView.collectionViewLayout minimumInteritemSpacingForSectionAtIndex:0];
+    CGFloat width = floorf((collectionViewWidth-spacing*(numberOfColumns-1))/(float)numberOfColumns);
     return CGSizeMake(width, width);
 }
 
@@ -240,6 +238,7 @@ static CGSize AssetGridThumbnailSize;
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         
     }];
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
