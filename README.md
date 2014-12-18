@@ -34,6 +34,10 @@ How to use
     		[photosPicker dismissViewControllerAnimated:YES completion:nil];
 		}
 
+		- (void)photosPicker:(DLFPhotosPickerViewController *)photosPicker detailViewController:(DLFDetailViewController *)detailViewController configureCell:(DLFPhotoCell *)cell indexPath:(NSIndexPath *)indexPath asset:(PHAsset *)asset {
+		        // customize the cell based on index path and asset. For example, to mark if the asset has been uploaded.
+		    }
+
 - You can check the `SampleViewController` class.
 		
 Cocoapods

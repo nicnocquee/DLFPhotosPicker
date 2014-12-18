@@ -93,4 +93,10 @@ separateSecondaryViewControllerFromPrimaryViewController:(UINavigationController
     }
 }
 
+- (void)detailViewController:(DLFDetailViewController *)detailViewController configureCell:(DLFPhotoCell *)cell indexPath:(NSIndexPath *)indexPath asset:(PHAsset *)asset {
+    if (self.photosPickerDelegate && [self.photosPickerDelegate respondsToSelector:@selector(photosPicker:detailViewController:configureCell:indexPath:asset:)]) {
+        [self.photosPickerDelegate photosPicker:self detailViewController:detailViewController configureCell:cell indexPath:indexPath asset:asset];
+    }
+}
+
 @end

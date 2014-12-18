@@ -283,6 +283,11 @@ static CGSize AssetGridThumbnailSize;
                               }];
     
     [cell setHighlighted:[self.selectionManager containsAsset:asset]];
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(detailViewController:configureCell:indexPath:asset:)]) {
+        [self.delegate detailViewController:self configureCell:cell indexPath:indexPath asset:asset];
+    }
+    
     return cell;
 }
 

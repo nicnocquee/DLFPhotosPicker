@@ -11,12 +11,14 @@
 
 #import "DLFPhotosSelectionManager.h"
 
+@class DLFPhotoCell;
 @class DLFDetailViewController;
 
 @protocol DLFDetailViewControllerDelegate <NSObject>
 
 @optional
 - (void)detailViewController:(DLFDetailViewController *)detailViewController didTapNextButton:(UIButton *)nextButton photos:(NSArray *)photos;
+- (void)detailViewController:(DLFDetailViewController *)detailViewController configureCell:(DLFPhotoCell *)cell indexPath:(NSIndexPath *)indexPath asset:(PHAsset *)asset;
 
 @end
 
