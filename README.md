@@ -48,13 +48,13 @@ Coming soon. As soon as I figure out how to include `PhotosPicker.storyboard` in
 Screenshots
 -
 
-![](https://raw.githubusercontent.com/nicnocquee/DLFPhotosPicker/master/screenshots/iOS%20Simulator%20Screen%20Shot%20Nov%2030,%202014,%2009.39.04.png)
+![](https://github.com/nicnocquee/DLFPhotosPicker/raw/master/screenshots/screenshot1.png)
 
-![](https://raw.githubusercontent.com/nicnocquee/DLFPhotosPicker/master/screenshots/iOS%20Simulator%20Screen%20Shot%20Nov%2030,%202014,%2009.38.27.png)
+![](https://github.com/nicnocquee/DLFPhotosPicker/raw/master/screenshots/screenshot2.png)
 
-![](https://raw.githubusercontent.com/nicnocquee/DLFPhotosPicker/master/screenshots/iOS%20Simulator%20Screen%20Shot%20Nov%2030,%202014,%2009.38.58.png)
+![](https://raw.githubusercontent.com/nicnocquee/DLFPhotosPicker/master/screenshots/screenshot3.png)
 
-![](https://raw.githubusercontent.com/nicnocquee/DLFPhotosPicker/master/screenshots/iOS%20Simulator%20Screen%20Shot%20Nov%2030,%202014,%2009.38.34.png)
+![](https://github.com/nicnocquee/DLFPhotosPicker/raw/master/screenshots/screenshot4.png)
 
 
 License
