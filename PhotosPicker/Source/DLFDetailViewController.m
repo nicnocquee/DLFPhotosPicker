@@ -528,7 +528,9 @@ static CGSize AssetGridThumbnailSize;
     PHAsset *asset = self.assetsFetchResults[indexPath.item];
     
     if ([self.selectionManager containsAsset:asset]) {
-        [self.selectionManager removeAsset:asset];
+        if (indexPath) {
+            [self.selectionManager removeAsset:asset];
+        }
     } else {
         if (indexPath) {
             [self.selectionManager addSelectedAsset:asset];
