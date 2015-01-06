@@ -191,6 +191,7 @@ static CGSize AssetGridThumbnailSize;
 
 - (void)photoLibraryDidChange:(PHChange *)changeInstance
 {
+    
     // Call might come on any background queue. Re-dispatch to the main queue to handle it.
     dispatch_async(dispatch_get_main_queue(), ^{
         
@@ -218,11 +219,12 @@ static CGSize AssetGridThumbnailSize;
                     if ([insertedIndexes count]) {
                         [collectionView insertItemsAtIndexPaths:[insertedIndexes aapl_indexPathsFromIndexesWithSection:0]];
                     }
+                } completion:^(BOOL finished) {
                     NSIndexSet *changedIndexes = [collectionChanges changedIndexes];
                     if ([changedIndexes count]) {
                         [collectionView reloadItemsAtIndexPaths:[changedIndexes aapl_indexPathsFromIndexesWithSection:0]];
                     }
-                } completion:NULL];
+                }];
             }
             
             [self resetCachedAssets];
