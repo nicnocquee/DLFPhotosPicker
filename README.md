@@ -1,4 +1,4 @@
-This is a library to select multiple photos in iOS 8 or later using iOS Photos framework.
+This is a library to select multiple photos in iOS 8 or later using iOS Photos framework. I use this library in my app, [Delightful app](http://getdelightfulapp.com).
 
 Features:
 -
@@ -56,6 +56,11 @@ Screenshots
 
 ![](https://github.com/nicnocquee/DLFPhotosPicker/raw/master/screenshots/screenshot4.png)
 
+Author
+--
+Nico Prananta [@nicnocquee](http://twitter.com/nicnocquee)
+
+If you use this library in your app, let me know :)
 
 License
 -
