@@ -21,6 +21,7 @@
 		03BBA6881A286A3D001F83D6 /* DLFPhotosPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BBA6871A286A3D001F83D6 /* DLFPhotosPickerViewController.m */; };
 		03BBA68A1A286A8B001F83D6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03BBA6891A286A8B001F83D6 /* Main.storyboard */; };
 		03BBA68D1A286ABE001F83D6 /* SampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BBA68C1A286ABE001F83D6 /* SampleViewController.m */; };
+		03FD38241A64EA6C0058D9FA /* DLFPhotosLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD38231A64EA6C0058D9FA /* DLFPhotosLibrary.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,8 @@
 		03BBA6891A286A8B001F83D6 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		03BBA68B1A286ABE001F83D6 /* SampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleViewController.h; sourceTree = "<group>"; };
 		03BBA68C1A286ABE001F83D6 /* SampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleViewController.m; sourceTree = "<group>"; };
+		03FD38221A64EA6C0058D9FA /* DLFPhotosLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLFPhotosLibrary.h; sourceTree = "<group>"; };
+		03FD38231A64EA6C0058D9FA /* DLFPhotosLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLFPhotosLibrary.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +159,8 @@
 				034275C91A26BD7B00B66342 /* DLFPhotosSelectionManager.m */,
 				03BBA6861A286A3D001F83D6 /* DLFPhotosPickerViewController.h */,
 				03BBA6871A286A3D001F83D6 /* DLFPhotosPickerViewController.m */,
+				03FD38221A64EA6C0058D9FA /* DLFPhotosLibrary.h */,
+				03FD38231A64EA6C0058D9FA /* DLFPhotosLibrary.m */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -268,6 +273,7 @@
 				0342755A1A25558E00B66342 /* main.m in Sources */,
 				034275851A2556F900B66342 /* DLFDetailViewController.m in Sources */,
 				034275CA1A26BD7B00B66342 /* DLFPhotosSelectionManager.m in Sources */,
+				03FD38241A64EA6C0058D9FA /* DLFPhotosLibrary.m in Sources */,
 				034275C11A25688600B66342 /* DLFPhotoCell.m in Sources */,
 				03BBA68D1A286ABE001F83D6 /* SampleViewController.m in Sources */,
 			);

@@ -11,6 +11,7 @@
 #import "DLFMasterViewController.h"
 #import "DLFDetailViewController.h"
 #import "DLFPhotosSelectionManager.h"
+#import "DLFPhotosLibrary.h"
 
 @interface DLFPhotosPickerViewController () <DLFMasterViewControllerDelegate, DLFDetailViewControllerDelegate>
 
@@ -29,6 +30,8 @@
     [[DLFPhotosSelectionManager sharedManager] removeAllAssets];
     
     self.delegate = self;
+    
+    [[DLFPhotosLibrary sharedLibrary] startObserving];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -43,6 +46,12 @@
         [masterVC setDelegate:self];
         [detailVC setDelegate:self];
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[DLFPhotosLibrary sharedLibrary] stopObserving];
 }
 
 - (void)didReceiveMemoryWarning {

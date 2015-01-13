@@ -9,6 +9,7 @@
 #import "DLFDetailViewController.h"
 #import "DLFPhotoCell.h"
 #import "DLFAssetsLayout.h"
+#import "DLFPhotosLibrary.h"
 
 typedef NS_ENUM(NSInteger, TouchPointInCell) {
     TouchPointInCellTopLeft,
@@ -93,12 +94,8 @@ static CGSize AssetGridThumbnailSize;
 {
     self.imageManager = [[PHCachingImageManager alloc] init];
     [self resetCachedAssets];
-    [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
-}
-
-- (void)dealloc
-{
-    [[PHPhotoLibrary sharedPhotoLibrary] unregisterChangeObserver:self];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(photoLibraryDidChangeNotification:) name:DLFPhotosLibraryDidChangeNotification object:nil];
 }
 
 - (void)viewDidLoad {
@@ -146,6 +143,12 @@ static CGSize AssetGridThumbnailSize;
 {
     [super viewWillAppear:animated];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(photoLibraryDidChangeNotification:) name:DLFPhotosLibraryDidChangeNotification object:nil];
+    PHChange *change = [[DLFPhotosLibrary sharedLibrary] changeInstance];
+    if (change) {
+        [self photoLibraryDidChange:change];
+    }
+    
     CGFloat scale = [UIScreen mainScreen].scale;
     CGSize size = cellSize(self.collectionView);
     AssetGridThumbnailSize = CGSizeMake(size.width * scale, size.height * scale);
@@ -154,6 +157,12 @@ static CGSize AssetGridThumbnailSize;
     [self.selectionManager addSelectionViewToView:self.view];
     [self.selectionManager.selectedPhotosView.clearSelectionButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
     [self.selectionManager.selectedPhotosView.clearSelectionButton addTarget:self action:@selector(didTapClearButton:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:DLFPhotosLibraryDidChangeNotification object:nil];
 }
 
 #pragma mark - Button
@@ -189,9 +198,14 @@ static CGSize AssetGridThumbnailSize;
 
 #pragma mark - PHPhotoLibraryChangeObserver
 
-- (void)photoLibraryDidChange:(PHChange *)changeInstance
+- (void)photoLibraryDidChangeNotification:(NSNotification *)notification
 {
+    PHChange *changeInstance = notification.userInfo[DLFPhotosLibraryDidChangeNotificationChangeKey];
     
+    [self photoLibraryDidChange:changeInstance];
+}
+
+- (void)photoLibraryDidChange:(PHChange *)changeInstance {
     // Call might come on any background queue. Re-dispatch to the main queue to handle it.
     dispatch_async(dispatch_get_main_queue(), ^{
         
