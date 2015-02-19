@@ -56,6 +56,7 @@
 		034275C61A25BB1B00B66342 /* DLFAssetsLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLFAssetsLayout.m; sourceTree = "<group>"; };
 		034275C81A26BD7B00B66342 /* DLFPhotosSelectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLFPhotosSelectionManager.h; sourceTree = "<group>"; };
 		034275C91A26BD7B00B66342 /* DLFPhotosSelectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLFPhotosSelectionManager.m; sourceTree = "<group>"; };
+		036128B81A95781D00B39677 /* DLFConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DLFConstants.h; sourceTree = "<group>"; };
 		03BBA6861A286A3D001F83D6 /* DLFPhotosPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLFPhotosPickerViewController.h; sourceTree = "<group>"; };
 		03BBA6871A286A3D001F83D6 /* DLFPhotosPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLFPhotosPickerViewController.m; sourceTree = "<group>"; };
 		03BBA6891A286A8B001F83D6 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -161,6 +162,7 @@
 				03BBA6871A286A3D001F83D6 /* DLFPhotosPickerViewController.m */,
 				03FD38221A64EA6C0058D9FA /* DLFPhotosLibrary.h */,
 				03FD38231A64EA6C0058D9FA /* DLFPhotosLibrary.m */,
+				036128B81A95781D00B39677 /* DLFConstants.h */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -402,6 +404,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -413,6 +416,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

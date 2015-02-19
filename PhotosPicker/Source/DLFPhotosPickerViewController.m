@@ -7,7 +7,7 @@
 //
 
 #import "DLFPhotosPickerViewController.h"
-
+#import "DLFConstants.h"
 #import "DLFMasterViewController.h"
 #import "DLFDetailViewController.h"
 #import "DLFPhotosSelectionManager.h"
@@ -19,32 +19,49 @@
 
 @implementation DLFPhotosPickerViewController
 
-- (void)awakeFromNib {
-    self.delegate = self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [self performTraitCollectionOverrideForSize:self.view.bounds.size];
     
     [[DLFPhotosSelectionManager sharedManager] removeAllAssets];
     
-    self.delegate = self;
+    if (DLF_IS_IPAD) {
+        self.splitViewController.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
+    }
     
     [[DLFPhotosLibrary sharedLibrary] startObserving];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    if (self.viewControllers.count > 1) {
-        UINavigationController *firstVC = [self.viewControllers firstObject];
-        UINavigationController *secondVC = [self.viewControllers lastObject];
+    
+    if (self.splitViewController.viewControllers.count > 1) {
+        UINavigationController *firstVC = [self.splitViewController.viewControllers firstObject];
+        UINavigationController *secondVC = [self.splitViewController.viewControllers lastObject];
         
         DLFMasterViewController *masterVC = [firstVC.viewControllers firstObject];
         DLFDetailViewController *detailVC = [secondVC.viewControllers firstObject];
         
         [masterVC setDelegate:self];
         [detailVC setDelegate:self];
+    } else {
+        DLFDetailViewController *detailVC = [((UINavigationController *)[self.splitViewController.viewControllers lastObject]).viewControllers firstObject];
+        [detailVC setDelegate:self];
+    }
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [self performTraitCollectionOverrideForSize:size];
+}
+
+- (UISplitViewController *)splitViewController {
+    return [self.childViewControllers firstObject];
+}
+
+- (void)performTraitCollectionOverrideForSize:(CGSize)size {
+    if (!DLF_IS_IPAD) {
+        return;
+    }
+    UITraitCollection *trait = [UITraitCollection traitCollectionWithHorizontalSizeClass:UIUserInterfaceSizeClassRegular];
+    for (UIViewController *vc in self.childViewControllers) {
+        [self setOverrideTraitCollection:trait forChildViewController:vc];
     }
 }
 
@@ -58,6 +75,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 #pragma mark - UISplitViewControllerDelegate
 
@@ -93,6 +111,7 @@ separateSecondaryViewControllerFromPrimaryViewController:(UINavigationController
         [self.photosPickerDelegate photosPickerDidCancel:self];
     }
 }
+
 
 #pragma mark - DLFDetailViewControllerDelegate
 

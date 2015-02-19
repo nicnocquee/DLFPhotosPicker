@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-@import Photos;
 
+@import Photos;
+@class DLFDetailViewController;
+@class DLFMasterViewController;
 @class DLFPhotoCell;
 @class DLFPhotosPickerViewController;
-@class DLFDetailViewController;
 
 @protocol DLFPhotosPickerViewControllerDelegate <NSObject>
 
@@ -22,8 +23,9 @@
 
 @end
 
-@interface DLFPhotosPickerViewController : UISplitViewController <UISplitViewControllerDelegate>
+@interface DLFPhotosPickerViewController : UIViewController <UISplitViewControllerDelegate>
 
+@property (nonatomic, readonly) UISplitViewController *splitViewController;
 @property (nonatomic, weak) id<DLFPhotosPickerViewControllerDelegate> photosPickerDelegate;
 
 @end

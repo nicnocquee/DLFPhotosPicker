@@ -13,7 +13,6 @@
 #define OVERLAY_VIEW_TAG 121212121
 
 @interface SampleViewController () <DLFPhotosPickerViewControllerDelegate>
-
 @end
 
 @implementation SampleViewController
@@ -51,7 +50,7 @@
 }
 
 - (void)photosPicker:(DLFPhotosPickerViewController *)photosPicker detailViewController:(DLFDetailViewController *)detailViewController didSelectPhotos:(NSArray *)photos {
-    NSLog(@"selected %d photos", photos.count);
+    NSLog(@"selected %d photos", (int)photos.count);
     [photosPicker dismissViewControllerAnimated:YES completion:nil];
 }
 

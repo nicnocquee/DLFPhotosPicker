@@ -10,6 +10,7 @@
 #import "DLFPhotoCell.h"
 #import "DLFAssetsLayout.h"
 #import "DLFPhotosLibrary.h"
+#import "DLFConstants.h"
 
 typedef NS_ENUM(NSInteger, TouchPointInCell) {
     TouchPointInCellTopLeft,
