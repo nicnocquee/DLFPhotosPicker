@@ -288,10 +288,15 @@ static CGSize AssetGridThumbnailSize;
     cell.tag = currentTag;
     
     PHAsset *asset = self.assetsFetchResults[indexPath.item];
+    
+    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+    [options setVersion:PHImageRequestOptionsVersionCurrent];
+    [options setResizeMode:PHImageRequestOptionsResizeModeFast];
+    
     [self.imageManager requestImageForAsset:asset
                                  targetSize:AssetGridThumbnailSize
                                 contentMode:PHImageContentModeAspectFill
-                                    options:nil
+                                    options:options
                               resultHandler:^(UIImage *result, NSDictionary *info) {
                                   if (cell.tag == currentTag) {
                                       cell.thumbnailImage = result;
