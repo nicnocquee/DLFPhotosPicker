@@ -76,6 +76,9 @@ static NSString * const CollectionSegue = @"showCollection";
             detailViewController.title = collection.localizedTitle;
         }
     }
+    if (self.delegate) {
+        [detailViewController setDelegate:(id)self.delegate];
+    }
     
 }
 

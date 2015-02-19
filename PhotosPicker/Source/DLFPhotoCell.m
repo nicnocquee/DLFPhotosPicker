@@ -17,8 +17,10 @@
 @implementation DLFPhotoCell
 
 - (void)setThumbnailImage:(UIImage *)thumbnailImage {
-    _thumbnailImage = thumbnailImage;
-    self.imageView.image = thumbnailImage;
+    if (_thumbnailImage != thumbnailImage) {
+        _thumbnailImage = thumbnailImage;
+        self.imageView.image = thumbnailImage;
+    }
 }
 
 - (void)setHighlighted:(BOOL)highlighted {

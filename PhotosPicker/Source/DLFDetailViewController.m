@@ -73,7 +73,7 @@ TouchPointInCell positionInCell(UICollectionViewCell *cell, CGPoint touchPoint) 
 
 @interface DLFDetailViewController () <PHPhotoLibraryChangeObserver, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate>
 
-@property (strong) PHCachingImageManager *imageManager;
+@property (strong) PHImageManager *imageManager;
 @property CGRect previousPreheatRect;
 @property (nonatomic, strong, readonly) UIPinchGestureRecognizer *pinchGesture;
 @property (nonatomic, strong, readonly) UILongPressGestureRecognizer *longGesture;
@@ -83,23 +83,23 @@ TouchPointInCell positionInCell(UICollectionViewCell *cell, CGPoint touchPoint) 
 @property (nonatomic, assign) CGPoint initialLongGestureCellCenter;
 @property (nonatomic, strong) NSIndexPath *currentPannedIndexPath;
 @property (nonatomic, strong) UIBarButtonItem *nextButton;
+@property (nonatomic, strong) NSCache *imagesCache;
 
 @end
 
 @implementation DLFDetailViewController
 
 static NSString * const CellReuseIdentifier = @"photoCell";
-static CGSize AssetGridThumbnailSize;
 
 - (void)awakeFromNib
 {
-    self.imageManager = [[PHCachingImageManager alloc] init];
-    [self resetCachedAssets];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(photoLibraryDidChangeNotification:) name:DLFPhotosLibraryDidChangeNotification object:nil];
 }
 
 - (void)viewDidLoad {
+    self.imageManager = [PHImageManager defaultManager];
+    self.imagesCache = [[NSCache alloc] init];
+    
     if (!self.assetsFetchResults) {
         self.title = NSLocalizedString(@"All Photos", nil);
         
@@ -136,7 +136,7 @@ static CGSize AssetGridThumbnailSize;
     UIBarButtonItem *spaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     spaceItem.width = 20;
     [self.navigationItem setRightBarButtonItems:@[nextButton, spaceItem, hintButton]];
-    [nextButton setEnabled:NO];
+    [nextButton setEnabled:([[[DLFPhotosSelectionManager sharedManager] selectedAssets] count]>0)?YES:NO];
     self.nextButton = nextButton;
 }
 
@@ -150,11 +150,6 @@ static CGSize AssetGridThumbnailSize;
         [self photoLibraryDidChange:change];
     }
     
-    CGFloat scale = [UIScreen mainScreen].scale;
-    CGSize size = cellSize(self.collectionView);
-    AssetGridThumbnailSize = CGSizeMake(size.width * scale, size.height * scale);
-    
-    [self updateCachedAssets];
     [self.selectionManager addSelectionViewToView:self.view];
     [self.selectionManager.selectedPhotosView.clearSelectionButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
     [self.selectionManager.selectedPhotosView.clearSelectionButton addTarget:self action:@selector(didTapClearButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -164,6 +159,10 @@ static CGSize AssetGridThumbnailSize;
     [super viewWillDisappear:animated];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:DLFPhotosLibraryDidChangeNotification object:nil];
+}
+
+- (void)dealloc {
+    [self.imagesCache removeAllObjects];
 }
 
 #pragma mark - Button
@@ -241,8 +240,6 @@ static CGSize AssetGridThumbnailSize;
                     }
                 }];
             }
-            
-            [self resetCachedAssets];
         }
     });
 }
@@ -250,6 +247,7 @@ static CGSize AssetGridThumbnailSize;
 #pragma mark - Orientation
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [self.imagesCache removeAllObjects];
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.collectionView.collectionViewLayout invalidateLayout];
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
@@ -290,19 +288,37 @@ static CGSize AssetGridThumbnailSize;
     
     PHAsset *asset = self.assetsFetchResults[indexPath.item];
     
-    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
-    [options setVersion:PHImageRequestOptionsVersionCurrent];
-    [options setResizeMode:PHImageRequestOptionsResizeModeFast];
-    
-    [self.imageManager requestImageForAsset:asset
-                                 targetSize:AssetGridThumbnailSize
-                                contentMode:PHImageContentModeAspectFill
-                                    options:options
-                              resultHandler:^(UIImage *result, NSDictionary *info) {
-                                  if (cell.tag == currentTag) {
-                                      cell.thumbnailImage = result;
-                                  }
-                              }];
+    if ([self.imagesCache objectForKey:asset.localIdentifier]) {
+        cell.thumbnailImage = [self.imagesCache objectForKey:asset.localIdentifier];
+    } else {
+        cell.thumbnailImage = nil;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+            [options setVersion:PHImageRequestOptionsVersionCurrent];
+            [options setResizeMode:PHImageRequestOptionsResizeModeFast];
+            [options setDeliveryMode:PHImageRequestOptionsDeliveryModeOpportunistic];
+            CGSize size = cellSize(collectionView);
+            CGFloat scale = [[UIScreen mainScreen] scale];
+            size = CGSizeMake(size.width * scale, size.height * scale);
+            NSString *identifier = asset.localIdentifier;
+            __weak typeof (self) selfie = self;
+            [self.imageManager requestImageForAsset:asset
+                                         targetSize:size
+                                        contentMode:PHImageContentModeAspectFill
+                                            options:options
+                                      resultHandler:^(UIImage *result, NSDictionary *info) {
+                                          if (cell.tag == currentTag) {
+                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                  cell.thumbnailImage = result;
+                                                  if (![info[PHImageResultIsDegradedKey] boolValue]) {
+                                                      [selfie.imagesCache setObject:result forKey:identifier];
+                                                  }
+                                              });
+                                              
+                                          }
+                                      }];
+        });
+    }
     
     [cell setHighlighted:[self.selectionManager containsAsset:asset]];
     
@@ -315,103 +331,6 @@ static CGSize AssetGridThumbnailSize;
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
     return NO;
-}
-
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    [self updateCachedAssets];
-}
-
-#pragma mark - Asset Caching
-
-- (void)resetCachedAssets
-{
-    [self.imageManager stopCachingImagesForAllAssets];
-    self.previousPreheatRect = CGRectZero;
-}
-
-- (void)updateCachedAssets
-{
-    BOOL isViewVisible = [self isViewLoaded] && [[self view] window] != nil;
-    if (!isViewVisible) { return; }
-    
-    // The preheat window is twice the height of the visible rect
-    CGRect preheatRect = self.collectionView.bounds;
-    preheatRect = CGRectInset(preheatRect, 0.0f, -0.5f * CGRectGetHeight(preheatRect));
-    
-    // If scrolled by a "reasonable" amount...
-    CGFloat delta = ABS(CGRectGetMidY(preheatRect) - CGRectGetMidY(self.previousPreheatRect));
-    if (delta > CGRectGetHeight(self.collectionView.bounds) / 3.0f) {
-        
-        // Compute the assets to start caching and to stop caching.
-        NSMutableArray *addedIndexPaths = [NSMutableArray array];
-        NSMutableArray *removedIndexPaths = [NSMutableArray array];
-        
-        [self computeDifferenceBetweenRect:self.previousPreheatRect andRect:preheatRect removedHandler:^(CGRect removedRect) {
-            NSArray *indexPaths = [self.collectionView aapl_indexPathsForElementsInRect:removedRect];
-            [removedIndexPaths addObjectsFromArray:indexPaths];
-        } addedHandler:^(CGRect addedRect) {
-            NSArray *indexPaths = [self.collectionView aapl_indexPathsForElementsInRect:addedRect];
-            [addedIndexPaths addObjectsFromArray:indexPaths];
-        }];
-        
-        NSArray *assetsToStartCaching = [self assetsAtIndexPaths:addedIndexPaths];
-        NSArray *assetsToStopCaching = [self assetsAtIndexPaths:removedIndexPaths];
-        
-        [self.imageManager startCachingImagesForAssets:assetsToStartCaching
-                                            targetSize:AssetGridThumbnailSize
-                                           contentMode:PHImageContentModeAspectFill
-                                               options:nil];
-        [self.imageManager stopCachingImagesForAssets:assetsToStopCaching
-                                           targetSize:AssetGridThumbnailSize
-                                          contentMode:PHImageContentModeAspectFill
-                                              options:nil];
-        
-        self.previousPreheatRect = preheatRect;
-    }
-}
-
-- (void)computeDifferenceBetweenRect:(CGRect)oldRect andRect:(CGRect)newRect removedHandler:(void (^)(CGRect removedRect))removedHandler addedHandler:(void (^)(CGRect addedRect))addedHandler
-{
-    if (CGRectIntersectsRect(newRect, oldRect)) {
-        CGFloat oldMaxY = CGRectGetMaxY(oldRect);
-        CGFloat oldMinY = CGRectGetMinY(oldRect);
-        CGFloat newMaxY = CGRectGetMaxY(newRect);
-        CGFloat newMinY = CGRectGetMinY(newRect);
-        if (newMaxY > oldMaxY) {
-            CGRect rectToAdd = CGRectMake(newRect.origin.x, oldMaxY, newRect.size.width, (newMaxY - oldMaxY));
-            addedHandler(rectToAdd);
-        }
-        if (oldMinY > newMinY) {
-            CGRect rectToAdd = CGRectMake(newRect.origin.x, newMinY, newRect.size.width, (oldMinY - newMinY));
-            addedHandler(rectToAdd);
-        }
-        if (newMaxY < oldMaxY) {
-            CGRect rectToRemove = CGRectMake(newRect.origin.x, newMaxY, newRect.size.width, (oldMaxY - newMaxY));
-            removedHandler(rectToRemove);
-        }
-        if (oldMinY < newMinY) {
-            CGRect rectToRemove = CGRectMake(newRect.origin.x, oldMinY, newRect.size.width, (newMinY - oldMinY));
-            removedHandler(rectToRemove);
-        }
-    } else {
-        addedHandler(newRect);
-        removedHandler(oldRect);
-    }
-}
-
-- (NSArray *)assetsAtIndexPaths:(NSArray *)indexPaths
-{
-    if (indexPaths.count == 0) { return nil; }
-    
-    NSMutableArray *assets = [NSMutableArray arrayWithCapacity:indexPaths.count];
-    for (NSIndexPath *indexPath in indexPaths) {
-        PHAsset *asset = self.assetsFetchResults[indexPath.item];
-        [assets addObject:asset];
-    }
-    return assets;
 }
 
 #pragma mark - Gestures
@@ -536,7 +455,8 @@ static CGSize AssetGridThumbnailSize;
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     if ([gestureRecognizer isEqual:self.panGesture]) {
         CGPoint translation = [self.panGesture velocityInView:self.collectionView];
-        return fabs(translation.y) <= AssetGridThumbnailSize.height/3 && fabs(translation.x)  >= 10;
+        CGSize size = cellSize(self.collectionView);
+        return fabs(translation.y) <= size.height/3 && fabs(translation.x)  >= 10;
     }
     return YES;
 }

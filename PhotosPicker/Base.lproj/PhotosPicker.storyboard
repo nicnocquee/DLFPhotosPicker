@@ -123,7 +123,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5vh-Ed-tm5">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <connections>
                                     <segue destination="TT8-oe-3FP" kind="embed" id="FYE-Id-eAD"/>
                                 </connections>
@@ -132,7 +132,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="vBD-ig-OMz" firstAttribute="top" secondItem="5vh-Ed-tm5" secondAttribute="bottom" id="F2w-Nz-0ax"/>
-                            <constraint firstItem="5vh-Ed-tm5" firstAttribute="top" secondItem="o2K-a6-fgi" secondAttribute="bottom" constant="-20" id="Jes-us-Bkb"/>
+                            <constraint firstItem="5vh-Ed-tm5" firstAttribute="top" secondItem="o2K-a6-fgi" secondAttribute="bottom" id="Jes-us-Bkb"/>
                             <constraint firstItem="5vh-Ed-tm5" firstAttribute="leading" secondItem="xoa-LC-deQ" secondAttribute="leading" id="Mqu-R6-NhV"/>
                             <constraint firstAttribute="trailing" secondItem="5vh-Ed-tm5" secondAttribute="trailing" id="XQw-Qg-V5y"/>
                         </constraints>
@@ -175,6 +175,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="yc6-OX-QyT"/>
+        <segue reference="IND-92-93T"/>
     </inferredMetricsTieBreakers>
 </document>
