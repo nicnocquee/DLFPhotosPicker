@@ -133,8 +133,8 @@
                         <constraints>
                             <constraint firstItem="vBD-ig-OMz" firstAttribute="top" secondItem="5vh-Ed-tm5" secondAttribute="bottom" id="F2w-Nz-0ax"/>
                             <constraint firstItem="5vh-Ed-tm5" firstAttribute="top" secondItem="o2K-a6-fgi" secondAttribute="bottom" constant="-20" id="Jes-us-Bkb"/>
-                            <constraint firstItem="5vh-Ed-tm5" firstAttribute="leading" secondItem="xoa-LC-deQ" secondAttribute="leadingMargin" constant="-16" id="Mqu-R6-NhV"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="5vh-Ed-tm5" secondAttribute="trailing" constant="-16" id="XQw-Qg-V5y"/>
+                            <constraint firstItem="5vh-Ed-tm5" firstAttribute="leading" secondItem="xoa-LC-deQ" secondAttribute="leading" id="Mqu-R6-NhV"/>
+                            <constraint firstAttribute="trailing" secondItem="5vh-Ed-tm5" secondAttribute="trailing" id="XQw-Qg-V5y"/>
                         </constraints>
                     </view>
                 </viewController>
