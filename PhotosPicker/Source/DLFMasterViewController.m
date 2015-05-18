@@ -30,9 +30,11 @@ static NSString * const CollectionSegue = @"showCollection";
 - (void)awakeFromNib
 {
     PHFetchResult *smartAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAlbumRegular options:nil];
-    PHFetchResult *topLevelUserCollections = [PHCollectionList fetchTopLevelUserCollectionsWithOptions:nil];
-    self.collectionsFetchResults = @[smartAlbums, topLevelUserCollections];
-    self.collectionsLocalizedTitles = @[NSLocalizedString(@"Smart Albums", @""), NSLocalizedString(@"Albums", @"")];
+    PHFetchOptions *options = [[PHFetchOptions alloc] init];
+    [options setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(localizedTitle)) ascending:YES]]];
+    PHFetchResult *topLevelUserCollections = [PHCollectionList fetchTopLevelUserCollectionsWithOptions:options];
+    self.collectionsFetchResults = @[topLevelUserCollections, smartAlbums];
+    self.collectionsLocalizedTitles = @[NSLocalizedString(@"Albums", @""), NSLocalizedString(@"Smart Albums", @"")];
     
     [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
     
