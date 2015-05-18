@@ -8,6 +8,7 @@
 
 #import "DLFMasterViewController.h"
 #import "DLFDetailViewController.h"
+#import "DLFAssetsLayout.h"
 #import <Photos/Photos.h>
 
 @interface DLFMasterViewController () <PHPhotoLibraryChangeObserver>
@@ -29,23 +30,32 @@ static NSString * const CollectionCellReuseIdentifier = @"CollectionCell";
 static NSString * const AllPhotosSegue = @"showAllPhotos";
 static NSString * const CollectionSegue = @"showCollection";
 
-- (void)awakeFromNib
+- (instancetype)initWithStyle:(UITableViewStyle)style
 {
-    PHFetchResult *smartAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAlbumRegular options:nil];
-    
-    PHFetchOptions *options = [[PHFetchOptions alloc] init];
-    [options setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(localizedTitle)) ascending:YES]]];
-    PHFetchResult *topLevelUserCollections = [PHCollectionList fetchTopLevelUserCollectionsWithOptions:options];
-    self.collectionsFetchResults = @[topLevelUserCollections, smartAlbums];
-    self.collectionsLocalizedTitles = @[NSLocalizedString(@"Albums", @""), NSLocalizedString(@"Smart Albums", @"")];
-    [self excludeEmptyCollections];
-    
-    [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
-    
-    self.title = NSLocalizedString(@"Albums", nil);
-    
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", nil) style:UIBarButtonItemStyleDone target:self action:@selector(didTapCancelButton:)];
-    [self.navigationItem setLeftBarButtonItem:cancelButton];
+    self = [super initWithStyle:style];
+    if (self) {
+        PHFetchResult *smartAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAlbumRegular options:nil];
+        
+        PHFetchOptions *options = [[PHFetchOptions alloc] init];
+        [options setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(localizedTitle)) ascending:YES]]];
+        PHFetchResult *topLevelUserCollections = [PHCollectionList fetchTopLevelUserCollectionsWithOptions:options];
+        self.collectionsFetchResults = @[topLevelUserCollections, smartAlbums];
+        self.collectionsLocalizedTitles = @[NSLocalizedString(@"Albums", @""), NSLocalizedString(@"Smart Albums", @"")];
+        [self excludeEmptyCollections];
+        
+        [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
+        
+        self.title = NSLocalizedString(@"Albums", nil);
+        
+        UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", nil) style:UIBarButtonItemStyleDone target:self action:@selector(didTapCancelButton:)];
+        [self.navigationItem setLeftBarButtonItem:cancelButton];
+        
+        [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:AllPhotosReuseIdentifier];
+        [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CollectionCellReuseIdentifier];
+        [self.tableView setDataSource:self];
+        [self.tableView setDelegate:self];
+    }
+    return self;
 }
 
 - (void)dealloc
@@ -86,6 +96,36 @@ static NSString * const CollectionSegue = @"showCollection";
         [detailViewController setDelegate:(id)self.delegate];
     }
     
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    DLFDetailViewController *detailViewController = [[DLFDetailViewController alloc] initWithCollectionViewLayout:[[DLFAssetsLayout alloc] init]];
+    PHFetchOptions *options = [[PHFetchOptions alloc] init];
+    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+    options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %d", PHAssetMediaTypeImage];
+    if (indexPath.section == 0) {
+        detailViewController.assetsFetchResults = [PHAsset fetchAssetsWithOptions:options];
+        detailViewController.title = NSLocalizedString(@"All Photos", nil);
+    } else {
+        NSArray *fetchResult = self.collectionsArrays[indexPath.section - 1];
+        PHCollection *collection = fetchResult[indexPath.row];
+        if ([collection isKindOfClass:[PHAssetCollection class]]) {
+            PHAssetCollection *assetCollection = (PHAssetCollection *)collection;
+            PHFetchResult *assetsFetchResult = [PHAsset fetchAssetsInAssetCollection:assetCollection options:options];
+            detailViewController.assetsFetchResults = assetsFetchResult;
+            detailViewController.assetCollection = assetCollection;
+            detailViewController.title = collection.localizedTitle;
+        }
+    }
+    if (self.delegate) {
+        [detailViewController setDelegate:(id)self.delegate];
+    }
+    UINavigationController *detailNavVC = [[UINavigationController alloc] initWithRootViewController:detailViewController];
+    [self.splitViewController showDetailViewController:detailNavVC sender:nil];
 }
 
 #pragma mark - UITableViewDataSource

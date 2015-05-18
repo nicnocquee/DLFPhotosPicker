@@ -16,6 +16,18 @@
 
 @implementation DLFPhotoCell
 
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.imageView = [UIImageView new];
+        [self.imageView setContentMode:UIViewContentModeScaleAspectFill];
+        [self.imageView setClipsToBounds:YES];
+        [self.contentView addSubview:self.imageView];
+    }
+    return self;
+}
+
 - (void)setThumbnailImage:(UIImage *)thumbnailImage {
     if (_thumbnailImage != thumbnailImage) {
         _thumbnailImage = thumbnailImage;
@@ -35,6 +47,12 @@
         self.highlightedView = view;
     }
     [self.highlightedView setHidden:!highlighted];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    [self.imageView setFrame:self.contentView.bounds];
 }
 
 @end

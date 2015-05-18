@@ -12,8 +12,11 @@
 #import "DLFDetailViewController.h"
 #import "DLFPhotosSelectionManager.h"
 #import "DLFPhotosLibrary.h"
+#import "DLFAssetsLayout.h"
 
 @interface DLFPhotosPickerViewController () <DLFMasterViewControllerDelegate, DLFDetailViewControllerDelegate>
+
+@property (nonatomic, strong) UISplitViewController *splitVC;
 
 @end
 
@@ -24,6 +27,16 @@
     self = [super init];
     if (self) {
         _multipleSelections = YES;
+        
+        self.splitVC = [[UISplitViewController alloc] init];
+        [self.splitVC setDelegate:self];
+        
+        DLFMasterViewController *masterVC = [[DLFMasterViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        DLFDetailViewController *detailVC = [[DLFDetailViewController alloc] initWithCollectionViewLayout:[[DLFAssetsLayout alloc] init]];
+        
+        UINavigationController *masterNavVC = [[UINavigationController alloc] initWithRootViewController:masterVC];
+        UINavigationController *detailNavVC = [[UINavigationController alloc] initWithRootViewController:detailVC];
+        [self.splitVC setViewControllers:@[masterNavVC, detailNavVC]];
     }
     return self;
 }
@@ -36,19 +49,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UISplitViewController *splitVC = self.splitVC;
+    [self addChildViewController:splitVC];
+    splitVC.view.frame = self.view.bounds;
+    [self.view addSubview:splitVC.view];
+    [splitVC didMoveToParentViewController:self];
+    
     [self performTraitCollectionOverrideForSize:self.view.bounds.size];
     
     [[DLFPhotosSelectionManager sharedManager] removeAllAssets];
     
     if (DLF_IS_IPAD) {
-        self.splitViewController.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
+        self.splitVC.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
     }
     
     [[DLFPhotosLibrary sharedLibrary] startObserving];
     
-    if (self.splitViewController.viewControllers.count > 1) {
-        UINavigationController *firstVC = [self.splitViewController.viewControllers firstObject];
-        UINavigationController *secondVC = [self.splitViewController.viewControllers lastObject];
+    if (self.splitVC.viewControllers.count > 1) {
+        UINavigationController *firstVC = [self.splitVC.viewControllers firstObject];
+        UINavigationController *secondVC = [self.splitVC.viewControllers lastObject];
         
         DLFMasterViewController *masterVC = [firstVC.viewControllers firstObject];
         DLFDetailViewController *detailVC = [secondVC.viewControllers firstObject];
@@ -56,7 +76,7 @@
         [masterVC setDelegate:self];
         [detailVC setDelegate:self];
     } else {
-        DLFDetailViewController *detailVC = [((UINavigationController *)[self.splitViewController.viewControllers lastObject]).viewControllers firstObject];
+        DLFDetailViewController *detailVC = [((UINavigationController *)[self.splitVC.viewControllers lastObject]).viewControllers firstObject];
         [detailVC setDelegate:self];
     }
 }

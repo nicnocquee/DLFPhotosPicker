@@ -64,7 +64,7 @@
 /**
  *  The split view controller that is used to show the assets and albums. View controller that is used to show assets is instance of DLFDetailViewController class. View controller that is used to show albums is instance of DLFMasterViewController class.
  */
-@property (nonatomic, readonly) UISplitViewController *splitViewController;
+@property (nonatomic, strong, readonly) UISplitViewController *splitVC;
 
 /**
  *  See DLFPhotosPickerViewControllerDelegate.

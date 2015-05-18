@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0342755A1A25558E00B66342 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 034275591A25558E00B66342 /* main.m */; };
 		0342755D1A25558E00B66342 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0342755C1A25558E00B66342 /* AppDelegate.m */; };
-		034275661A25558E00B66342 /* PhotosPicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 034275641A25558E00B66342 /* PhotosPicker.storyboard */; };
 		034275681A25558E00B66342 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 034275671A25558E00B66342 /* Images.xcassets */; };
 		0342756B1A25558E00B66342 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 034275691A25558E00B66342 /* LaunchScreen.xib */; };
 		034275771A25558F00B66342 /* PhotosPickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 034275761A25558F00B66342 /* PhotosPickerTests.m */; };
@@ -21,6 +20,7 @@
 		03BBA6881A286A3D001F83D6 /* DLFPhotosPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BBA6871A286A3D001F83D6 /* DLFPhotosPickerViewController.m */; };
 		03BBA68A1A286A8B001F83D6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03BBA6891A286A8B001F83D6 /* Main.storyboard */; };
 		03BBA68D1A286ABE001F83D6 /* SampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BBA68C1A286ABE001F83D6 /* SampleViewController.m */; };
+		03E52B721B09FC88004C57B3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03E52B711B09FC88004C57B3 /* UIKit.framework */; };
 		03FD38241A64EA6C0058D9FA /* DLFPhotosLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD38231A64EA6C0058D9FA /* DLFPhotosLibrary.m */; };
 /* End PBXBuildFile section */
 
@@ -40,7 +40,6 @@
 		034275591A25558E00B66342 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0342755B1A25558E00B66342 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0342755C1A25558E00B66342 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		034275651A25558E00B66342 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/PhotosPicker.storyboard; sourceTree = "<group>"; };
 		034275671A25558E00B66342 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0342756A1A25558E00B66342 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		034275701A25558F00B66342 /* PhotosPickerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotosPickerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -62,6 +61,7 @@
 		03BBA6891A286A8B001F83D6 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		03BBA68B1A286ABE001F83D6 /* SampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleViewController.h; sourceTree = "<group>"; };
 		03BBA68C1A286ABE001F83D6 /* SampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleViewController.m; sourceTree = "<group>"; };
+		03E52B711B09FC88004C57B3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		03FD38221A64EA6C0058D9FA /* DLFPhotosLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLFPhotosLibrary.h; sourceTree = "<group>"; };
 		03FD38231A64EA6C0058D9FA /* DLFPhotosLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLFPhotosLibrary.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -71,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03E52B721B09FC88004C57B3 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,6 +88,7 @@
 		0342754B1A25558E00B66342 = {
 			isa = PBXGroup;
 			children = (
+				03E52B711B09FC88004C57B3 /* UIKit.framework */,
 				034275561A25558E00B66342 /* PhotosPicker */,
 				034275731A25558F00B66342 /* PhotosPickerTests */,
 				034275551A25558E00B66342 /* Products */,
@@ -147,7 +149,6 @@
 		034275861A25570000B66342 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				034275641A25558E00B66342 /* PhotosPicker.storyboard */,
 				034275801A2556D800B66342 /* DLFMasterViewController.h */,
 				034275811A2556D800B66342 /* DLFMasterViewController.m */,
 				034275831A2556F900B66342 /* DLFDetailViewController.h */,
@@ -247,7 +248,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				034275661A25558E00B66342 /* PhotosPicker.storyboard in Resources */,
 				0342756B1A25558E00B66342 /* LaunchScreen.xib in Resources */,
 				034275681A25558E00B66342 /* Images.xcassets in Resources */,
 				03BBA68A1A286A8B001F83D6 /* Main.storyboard in Resources */,
@@ -300,15 +300,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		034275641A25558E00B66342 /* PhotosPicker.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				034275651A25558E00B66342 /* Base */,
-			);
-			name = PhotosPicker.storyboard;
-			path = ..;
-			sourceTree = "<group>";
-		};
 		034275691A25558E00B66342 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

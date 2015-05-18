@@ -28,7 +28,7 @@
 }
 
 - (IBAction)didTapPickPhotos:(id)sender {
-    DLFPhotosPickerViewController *photosPicker = [[UIStoryboard storyboardWithName:@"PhotosPicker" bundle:nil] instantiateInitialViewController];
+    DLFPhotosPickerViewController *photosPicker = [[DLFPhotosPickerViewController alloc] init]; 
     [photosPicker setPhotosPickerDelegate:self];
     [photosPicker setMultipleSelections:NO];
     [self presentViewController:photosPicker animated:YES completion:nil];

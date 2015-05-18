@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "DLFPhotosPicker"
-  s.version      = "0.10"
+  s.version      = "0.11"
   s.summary      = "Photos picker for iOS using iOS 8 Photos framework"
 
   s.description  = <<-DESC
@@ -106,7 +106,7 @@ Pod::Spec.new do |s|
   # s.resource  = "PhotosPicker/Base.lproj/PhotosPicker.storyboard"
   # s.resources = "Resources/*.png"
   # s.resources 	 = ['PhotosPicker/**/*.{png,storyboard}']
-  s.resource_bundle = {'DLFPhotosPicker' => ['PhotosPicker/*.{lproj,storyboard}']}
+  # s.resource_bundle = {'DLFPhotosPicker' => ['PhotosPicker/*.{lproj,storyboard}']}
 
   # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
 

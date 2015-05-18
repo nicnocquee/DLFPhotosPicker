@@ -96,9 +96,21 @@ static NSString * const CellReuseIdentifier = @"photoCell";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(photoLibraryDidChangeNotification:) name:DLFPhotosLibraryDidChangeNotification object:nil];
 }
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(photoLibraryDidChangeNotification:) name:DLFPhotosLibraryDidChangeNotification object:nil];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     self.imageManager = [PHImageManager defaultManager];
     self.imagesCache = [[NSCache alloc] init];
+    
+    [self.collectionView registerClass:[DLFPhotoCell class] forCellWithReuseIdentifier:CellReuseIdentifier];
+    [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     
     if (!self.assetsFetchResults) {
         self.title = NSLocalizedString(@"All Photos", nil);
