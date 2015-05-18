@@ -57,7 +57,7 @@ Properties
 Cocoapods
 --
 
-Coming soon. As soon as I figure out how to include `PhotosPicker.storyboard` in the pod. Anybody knows how to do this? Tweet me [@nicnocquee](http://twitter.com/nicnocquee) please :)
+I couldn't figure out how to include `PhotosPicker.storyboard` in the pod. Anybody knows how to do this? Tweet me [@nicnocquee](http://twitter.com/nicnocquee) please :)
 
 Screenshots
 -
