@@ -16,16 +16,22 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "DLFPhotosPicker"
-  s.version      = "0.11"
+  s.version      = "0.15"
   s.summary      = "Photos picker for iOS using iOS 8 Photos framework"
 
   s.description  = <<-DESC
-                   A longer description of DLFPhotosPicker in Markdown format.
+                  This is a library to select single photo or multiple photos in iOS 8 or later using iOS Photos framework. I use this library in my app, Delightful app.
 
-                   * Think: Why did you write this? What is the focus? What does it do?
-                   * CocoaPods will be using this to generate tags, and improve search results.
-                   * Try to keep it short, snappy and to the point.
-                   * Finally, don't worry about the indent, CocoaPods strips it!
+                  Features:
+--
+
+- Tap and hold a photo to preview (zoom).
+- Pinch out a photo to preview (zoom).
+- Drag to select multiple photos quickly. Simply drag to left or right to start selecting multiple photos.
+- Works on both landscape and portrait.
+- Using iOS 8's UISplitViewController for albums and photos. You can see the split view on iPhone 6 plus landscape.
+- Quickly clear all selections.
+- Selected photos are retained when changing album.
                    DESC
 
   s.homepage     = "https://github.com/nicnocquee/DLFPhotosPicker"
