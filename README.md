@@ -45,8 +45,7 @@ How to use
 
 	        }];
 	    }];
-
-	}
+		}
 
 - You can check the `SampleViewController` class.
 
