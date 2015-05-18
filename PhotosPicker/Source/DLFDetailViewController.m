@@ -129,15 +129,22 @@ static NSString * const CellReuseIdentifier = @"photoCell";
     
     [self.navigationController.interactivePopGestureRecognizer requireGestureRecognizerToFail:_panGesture];
     
-    UIBarButtonItem *nextButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Next", nil) style:UIBarButtonItemStyleDone target:self action:@selector(didTapNextButton:)];
-    UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
-    [infoButton addTarget:self action:@selector(didTapHintButton:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *hintButton = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
-    UIBarButtonItem *spaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    spaceItem.width = 20;
-    [self.navigationItem setRightBarButtonItems:@[nextButton, spaceItem, hintButton]];
-    [nextButton setEnabled:([[[DLFPhotosSelectionManager sharedManager] selectedAssets] count]>0)?YES:NO];
-    self.nextButton = nextButton;
+    BOOL multipleSelections = YES;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(multipleSelectionsInDetailViewController:)]) {
+        multipleSelections = [self.delegate multipleSelectionsInDetailViewController:self];
+    }
+    
+    if (multipleSelections) {
+        UIBarButtonItem *nextButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Next", nil) style:UIBarButtonItemStyleDone target:self action:@selector(didTapNextButton:)];
+        UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
+        [infoButton addTarget:self action:@selector(didTapHintButton:) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *hintButton = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
+        UIBarButtonItem *spaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+        spaceItem.width = 20;
+        [self.navigationItem setRightBarButtonItems:@[nextButton, spaceItem, hintButton]];
+        [nextButton setEnabled:([[[DLFPhotosSelectionManager sharedManager] selectedAssets] count]>0)?YES:NO];
+        self.nextButton = nextButton;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -440,7 +447,20 @@ static NSString * const CellReuseIdentifier = @"photoCell";
 - (void)handleTapGesture:(UITapGestureRecognizer *)sender {
     CGPoint touchPoint = [sender locationInView:self.collectionView];
     NSIndexPath *tappedCellPath = [self.collectionView indexPathForItemAtPoint:touchPoint];
-    [self toggleSelectedIndexPath:tappedCellPath];
+    BOOL multipleSelections = YES;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(multipleSelectionsInDetailViewController:)]) {
+        multipleSelections = [self.delegate multipleSelectionsInDetailViewController:self];
+    }
+    
+    if (multipleSelections) {
+        [self toggleSelectedIndexPath:tappedCellPath];
+    } else {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(detailViewController:didSelectPhoto:)]) {
+            PHAsset *asset = self.assetsFetchResults[tappedCellPath.item];
+            [self.delegate detailViewController:self didSelectPhoto:asset];
+        }
+    }
+    
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {

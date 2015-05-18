@@ -19,6 +19,21 @@
 
 @implementation DLFPhotosPickerViewController
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _multipleSelections = YES;
+    }
+    return self;
+}
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    
+    _multipleSelections = YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self performTraitCollectionOverrideForSize:self.view.bounds.size];
@@ -124,6 +139,15 @@ separateSecondaryViewControllerFromPrimaryViewController:(UINavigationController
 - (void)detailViewController:(DLFDetailViewController *)detailViewController configureCell:(DLFPhotoCell *)cell indexPath:(NSIndexPath *)indexPath asset:(PHAsset *)asset {
     if (self.photosPickerDelegate && [self.photosPickerDelegate respondsToSelector:@selector(photosPicker:detailViewController:configureCell:indexPath:asset:)]) {
         [self.photosPickerDelegate photosPicker:self detailViewController:detailViewController configureCell:cell indexPath:indexPath asset:asset];
+    }
+}
+
+- (BOOL)multipleSelectionsInDetailViewController:(DLFDetailViewController *)detailViewController {
+    return self.multipleSelections;
+}
+- (void)detailViewController:(DLFDetailViewController *)detailViewController didSelectPhoto:(PHAsset *)photo {
+    if (self.photosPickerDelegate && [self.photosPickerDelegate respondsToSelector:@selector(photosPicker:detailViewController:didSelectPhoto:)]) {
+        [self.photosPickerDelegate photosPicker:self detailViewController:detailViewController didSelectPhoto:photo];
     }
 }
 

@@ -27,23 +27,24 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 - (IBAction)didTapPickPhotos:(id)sender {
     DLFPhotosPickerViewController *photosPicker = [[UIStoryboard storyboardWithName:@"PhotosPicker" bundle:nil] instantiateInitialViewController];
     [photosPicker setPhotosPickerDelegate:self];
+    [photosPicker setMultipleSelections:NO];
     [self presentViewController:photosPicker animated:YES completion:nil];
 }
 
 #pragma mark - DLFPhotosPickerViewControllerDelegate
+
+- (void)photosPicker:(DLFPhotosPickerViewController *)photosPicker detailViewController:(DLFDetailViewController *)detailViewController didSelectPhoto:(PHAsset *)photo {
+    [photosPicker dismissViewControllerAnimated:YES completion:^{
+        [[PHImageManager defaultManager] requestImageForAsset:photo targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeDefault options:nil resultHandler:^(UIImage *result, NSDictionary *info) {
+            NSLog(@"Selected one asset");
+            
+        }];
+    }];
+    
+}
 
 - (void)photosPickerDidCancel:(DLFPhotosPickerViewController *)photosPicker {
     [photosPicker dismissViewControllerAnimated:YES completion:nil];

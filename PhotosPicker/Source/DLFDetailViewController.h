@@ -17,6 +17,8 @@
 @protocol DLFDetailViewControllerDelegate <NSObject>
 
 @optional
+- (BOOL)multipleSelectionsInDetailViewController:(DLFDetailViewController *)detailViewController;
+- (void)detailViewController:(DLFDetailViewController *)detailViewController didSelectPhoto:(PHAsset *)photo;
 - (void)detailViewController:(DLFDetailViewController *)detailViewController didTapNextButton:(UIButton *)nextButton photos:(NSArray *)photos;
 - (void)detailViewController:(DLFDetailViewController *)detailViewController configureCell:(DLFPhotoCell *)cell indexPath:(NSIndexPath *)indexPath asset:(PHAsset *)asset;
 
