@@ -1,7 +1,7 @@
-This is a library to select multiple photos in iOS 8 or later using iOS Photos framework. I use this library in my app, [Delightful app](http://getdelightfulapp.com).
+This is a library to select single photo or multiple photos in iOS 8 or later using iOS Photos framework. I use this library in my app, [Delightful app](http://getdelightfulapp.com).
 
 Features:
--
+--
 
 - Tap and hold a photo to preview (zoom).
 - Pinch out a photo to preview (zoom).
@@ -12,7 +12,7 @@ Features:
 - Selected photos are retained when changing album.
 
 How to use
--
+--
 
 - Copy all the files in `Source` folder **and** `PhotosPicker.storyboard` inside Base.lproj to your project.
 - Present the `DLFPhotosPickerViewController`
@@ -38,10 +38,25 @@ How to use
 		        // customize the cell based on index path and asset. For example, to mark if the asset has been uploaded.
 		    }
 
+		- (void)photosPicker:(DLFPhotosPickerViewController *)photosPicker detailViewController:(DLFDetailViewController *)detailViewController didSelectPhoto:(PHAsset *)photo {
+	    [photosPicker dismissViewControllerAnimated:YES completion:^{
+	        [[PHImageManager defaultManager] requestImageForAsset:photo targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeDefault options:nil resultHandler:^(UIImage *result, NSDictionary *info) {
+	            NSLog(@"Selected one asset");
+
+	        }];
+	    }];
+
+	}
+
 - You can check the `SampleViewController` class.
-		
+
+Properties
+--
+
+`multipleSelections`. Default: YES. Set this to NO to only select one photo. When this property is set to NO, delegate's `photosPicker:detailViewController:didSelectPhoto:` will be called. Implement that method to handle selected asset, then dismiss the photos picker.
+
 Cocoapods
--
+--
 
 Coming soon. As soon as I figure out how to include `PhotosPicker.storyboard` in the pod. Anybody knows how to do this?
 

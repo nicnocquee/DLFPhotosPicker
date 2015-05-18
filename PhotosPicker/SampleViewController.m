@@ -43,7 +43,6 @@
             
         }];
     }];
-    
 }
 
 - (void)photosPickerDidCancel:(DLFPhotosPickerViewController *)photosPicker {
