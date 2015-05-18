@@ -14,7 +14,7 @@ Features:
 How to use
 --
 
-- Copy all the files in `Source` folder to your project.
+- Use Cocoapods: `pod 'DLFPhotosPicker'` or copy all the files in `Source` folder to your project.
 - Present the `DLFPhotosPickerViewController`
 
 		DLFPhotosPickerViewController *picker = [[DLFPhotosPickerViewController alloc] init];
@@ -54,13 +54,8 @@ Properties
 
 `multipleSelections`. Default: YES. Set this to NO to only select one photo. When this property is set to NO, delegate's `photosPicker:detailViewController:didSelectPhoto:` will be called. Implement that method to handle selected asset, then dismiss the photos picker.
 
-Cocoapods
---
-
-
-
 Screenshots
--
+--
 
 ![](https://github.com/nicnocquee/DLFPhotosPicker/raw/master/screenshots/screenshot1.png)
 
