@@ -17,6 +17,8 @@
 @property (strong) NSArray *collectionsFetchResults;
 @property (strong) NSArray *collectionsLocalizedTitles;
 
+@property (nonatomic) NSArray *collectionsArrays;
+
 @end
 
 @implementation DLFMasterViewController
@@ -30,11 +32,13 @@ static NSString * const CollectionSegue = @"showCollection";
 - (void)awakeFromNib
 {
     PHFetchResult *smartAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAlbumRegular options:nil];
+    
     PHFetchOptions *options = [[PHFetchOptions alloc] init];
     [options setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(localizedTitle)) ascending:YES]]];
     PHFetchResult *topLevelUserCollections = [PHCollectionList fetchTopLevelUserCollectionsWithOptions:options];
     self.collectionsFetchResults = @[topLevelUserCollections, smartAlbums];
     self.collectionsLocalizedTitles = @[NSLocalizedString(@"Albums", @""), NSLocalizedString(@"Smart Albums", @"")];
+    [self excludeEmptyCollections];
     
     [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
     
@@ -68,7 +72,7 @@ static NSString * const CollectionSegue = @"showCollection";
         detailViewController.title = NSLocalizedString(@"All Photos", nil);
     } else if ([segue.identifier isEqualToString:CollectionSegue]) {
         NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
-        PHFetchResult *fetchResult = self.collectionsFetchResults[indexPath.section - 1];
+        NSArray *fetchResult = self.collectionsArrays[indexPath.section - 1];
         PHCollection *collection = fetchResult[indexPath.row];
         if ([collection isKindOfClass:[PHAssetCollection class]]) {
             PHAssetCollection *assetCollection = (PHAssetCollection *)collection;
@@ -88,7 +92,7 @@ static NSString * const CollectionSegue = @"showCollection";
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1 + self.collectionsFetchResults.count;
+    return 1 + self.collectionsArrays.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -97,8 +101,8 @@ static NSString * const CollectionSegue = @"showCollection";
     if (section == 0) {
         numberOfRows = 1; // "All Photos" section
     } else {
-        PHFetchResult *fetchResult = self.collectionsFetchResults[section - 1];
-        numberOfRows = fetchResult.count;
+        NSArray *collections = self.collectionsArrays[section - 1];
+        numberOfRows = collections.count;
     }
     return numberOfRows;
 }
@@ -113,8 +117,8 @@ static NSString * const CollectionSegue = @"showCollection";
         localizedTitle = NSLocalizedString(@"All Photos", @"");
     } else {
         cell = [tableView dequeueReusableCellWithIdentifier:CollectionCellReuseIdentifier forIndexPath:indexPath];
-        PHFetchResult *fetchResult = self.collectionsFetchResults[indexPath.section - 1];
-        PHCollection *collection = fetchResult[indexPath.row];
+        NSArray *results = self.collectionsArrays[indexPath.section - 1];
+        PHCollection *collection = results[indexPath.row];
         localizedTitle = collection.localizedTitle;
     }
     cell.textLabel.text = localizedTitle;
@@ -152,10 +156,28 @@ static NSString * const CollectionSegue = @"showCollection";
         
         if (updatedCollectionsFetchResults) {
             self.collectionsFetchResults = updatedCollectionsFetchResults;
+            [self excludeEmptyCollections];
             [self.tableView reloadData];
         }
         
     });
+}
+
+- (void)excludeEmptyCollections {
+    NSMutableArray *collectionsArray = [NSMutableArray array];
+    for (PHFetchResult *result in self.collectionsFetchResults) {
+        NSMutableArray *filteredCollections = [NSMutableArray array];
+        [result enumerateObjectsUsingBlock:^(PHAssetCollection *obj, NSUInteger idx, BOOL *stop) {
+            PHFetchOptions *options = [[PHFetchOptions alloc] init];
+            [options setPredicate:[NSPredicate predicateWithFormat:@"mediaType == %d", PHAssetMediaTypeImage]];
+            PHFetchResult *countResult = [PHAsset fetchAssetsInAssetCollection:obj options:options];
+            if (countResult.count > 0) {
+                [filteredCollections addObject:obj];
+            }
+        }];
+        [collectionsArray addObject:filteredCollections];
+    }
+    self.collectionsArrays = collectionsArray;
 }
 
 @end
