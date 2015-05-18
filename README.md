@@ -14,10 +14,10 @@ Features:
 How to use
 --
 
-- Copy all the files in `Source` folder **and** `PhotosPicker.storyboard` inside Base.lproj to your project.
+- Copy all the files in `Source` folder to your project.
 - Present the `DLFPhotosPickerViewController`
 
-		DLFPhotosPickerViewController *picker = [[UIStoryboard storyboardWithName:@"PhotosPicker" bundle:nil] instantiateInitialViewController];
+		DLFPhotosPickerViewController *picker = [[DLFPhotosPickerViewController alloc] init];
     	[picker setPhotosPickerDelegate:self];
     	[self presentViewController:picker animated:YES completion:nil];
 
@@ -57,7 +57,7 @@ Properties
 Cocoapods
 --
 
-I couldn't figure out how to include `PhotosPicker.storyboard` in the pod. Anybody knows how to do this? Tweet me [@nicnocquee](http://twitter.com/nicnocquee) please :)
+
 
 Screenshots
 -
