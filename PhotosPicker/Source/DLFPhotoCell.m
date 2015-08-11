@@ -53,6 +53,7 @@
     [super layoutSubviews];
     
     [self.imageView setFrame:self.contentView.bounds];
+    [self.highlightedView setFrame:self.imageView.frame];
 }
 
 @end

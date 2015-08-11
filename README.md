@@ -17,35 +17,39 @@ How to use
 - Use Cocoapods: `pod 'DLFPhotosPicker'` or copy all the files in `Source` folder to your project.
 - Present the `DLFPhotosPickerViewController`
 
-		DLFPhotosPickerViewController *picker = [[DLFPhotosPickerViewController alloc] init];
-    	[picker setPhotosPickerDelegate:self];
-    	[self presentViewController:picker animated:YES completion:nil];
+```objc
+DLFPhotosPickerViewController *picker = [[DLFPhotosPickerViewController alloc] init];
+[picker setPhotosPickerDelegate:self];
+[self presentViewController:picker animated:YES completion:nil];
+```
 
 - Implement the delegate methods
 
-		#pragma mark - DLFPhotosPickerViewControllerDelegate
+```objc
+#pragma mark - DLFPhotosPickerViewControllerDelegate
 
-		- (void)photosPickerDidCancel:(DLFPhotosPickerViewController *)photosPicker {
-    		[photosPicker dismissViewControllerAnimated:YES completion:nil];
-		}
+- (void)photosPickerDidCancel:(DLFPhotosPickerViewController *)photosPicker {
+	[photosPicker dismissViewControllerAnimated:YES completion:nil];
+}
 
-		- (void)photosPicker:(DLFPhotosPickerViewController *)photosPicker detailViewController:(DLFDetailViewController *)detailViewController didSelectPhotos:(NSArray *)photos {
-    		NSLog(@"selected %d photos", photos.count);
-    		[photosPicker dismissViewControllerAnimated:YES completion:nil];
-		}
+- (void)photosPicker:(DLFPhotosPickerViewController *)photosPicker detailViewController:(DLFDetailViewController *)detailViewController didSelectPhotos:(NSArray *)photos {
+	NSLog(@"selected %d photos", photos.count);
+	[photosPicker dismissViewControllerAnimated:YES completion:nil];
+}
 
-		- (void)photosPicker:(DLFPhotosPickerViewController *)photosPicker detailViewController:(DLFDetailViewController *)detailViewController configureCell:(DLFPhotoCell *)cell indexPath:(NSIndexPath *)indexPath asset:(PHAsset *)asset {
-		        // customize the cell based on index path and asset. For example, to mark if the asset has been uploaded.
-		    }
+- (void)photosPicker:(DLFPhotosPickerViewController *)photosPicker detailViewController:(DLFDetailViewController *)detailViewController configureCell:(DLFPhotoCell *)cell indexPath:(NSIndexPath *)indexPath asset:(PHAsset *)asset {
+        // customize the cell based on index path and asset. For example, to mark if the asset has been uploaded.
+    }
 
-		- (void)photosPicker:(DLFPhotosPickerViewController *)photosPicker detailViewController:(DLFDetailViewController *)detailViewController didSelectPhoto:(PHAsset *)photo {
-	    [photosPicker dismissViewControllerAnimated:YES completion:^{
-	        [[PHImageManager defaultManager] requestImageForAsset:photo targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeDefault options:nil resultHandler:^(UIImage *result, NSDictionary *info) {
-	            NSLog(@"Selected one asset");
+- (void)photosPicker:(DLFPhotosPickerViewController *)photosPicker detailViewController:(DLFDetailViewController *)detailViewController didSelectPhoto:(PHAsset *)photo {
+[photosPicker dismissViewControllerAnimated:YES completion:^{
+    [[PHImageManager defaultManager] requestImageForAsset:photo targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeDefault options:nil resultHandler:^(UIImage *result, NSDictionary *info) {
+        NSLog(@"Selected one asset");
 
-	        }];
-	    }];
-		}
+    }];
+}];
+}
+```
 
 - You can check the `SampleViewController` class.
 
