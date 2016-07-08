@@ -40,13 +40,17 @@
     }];
     XCUIElement *pickPhotosButton = app.buttons[@"Pick Photos"];
     [pickPhotosButton tap];
+    sleep(2);
     [app.collectionViews.cells[@"Image 1"] tap];
     [pickPhotosButton tap];
+    sleep(2);
     [app.navigationBars[@"All Photos"].buttons[@"Albums"] tap];
     [app.tables.staticTexts[@"Camera Roll"] tap];
     [app.navigationBars[@"Camera Roll"].buttons[@"Albums"] tap];
     [app.navigationBars[@"Albums"].buttons[@"Cancel"] tap];
     
+    XCTAssertTrue(true);
 }
+
 
 @end
