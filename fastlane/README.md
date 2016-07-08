@@ -13,6 +13,11 @@ fastlane ios test
 Runs all the tests
 
 You will need to run the example app once in iPhone 5s simulator to allow the Photos library access.
+### ios test_it
+```
+fastlane ios test_it
+```
+
 ### ios pod
 ```
 fastlane ios pod
