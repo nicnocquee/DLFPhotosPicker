@@ -52,6 +52,16 @@
                ReferencedContainer = "container:PhotosPicker.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "038D38641D2FDA6300C97C72"
+               BuildableName = "PhotosPickerUITests.xctest"
+               BlueprintName = "PhotosPickerUITests"
+               ReferencedContainer = "container:PhotosPicker.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

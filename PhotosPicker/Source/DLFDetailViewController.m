@@ -300,6 +300,8 @@ static NSString * const CellReuseIdentifier = @"photoCell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     DLFPhotoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellReuseIdentifier forIndexPath:indexPath];
+    [cell setIsAccessibilityElement:YES];
+    [cell setAccessibilityLabel:[NSString stringWithFormat:@"Image %ld", (long)indexPath.row]];
     
     // Increment the cell's tag
     NSInteger currentTag = cell.tag + 1;
