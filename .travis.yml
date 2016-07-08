@@ -16,5 +16,5 @@ install:
 script:
   - open -a "simulator" --args -CurrentDeviceUDID $SIMULATOR_ID
   - set -o pipefail
-  - xcodebuild -scheme PhotosPicker -project ./PhotosPicker.xcodeproj -sdk iphonesimulator clean build | xcpretty -c || true
-  - xcodebuild -scheme PhotosPicker -project ./PhotosPicker.xcodeproj -sdk iphonesimulator test | xcpretty -c
+  - xcodebuild -scheme PhotosPicker -project ./PhotosPicker.xcodeproj -sdk iphonesimulator -destination "platform=iOS Simulator,id=$SIMULATOR_ID" clean build | xcpretty -c || true
+  - xcodebuild -scheme PhotosPicker -project ./PhotosPicker.xcodeproj -sdk iphonesimulator -destination "platform=iOS Simulator,id=$SIMULATOR_ID" test | xcpretty -c
