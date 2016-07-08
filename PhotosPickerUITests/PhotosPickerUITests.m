@@ -32,8 +32,12 @@
     [super tearDown];
 }
 
-- (void)testUI {    
+- (void)testUI {
     XCUIApplication *app = [[XCUIApplication alloc] init];
+    [self addUIInterruptionMonitorWithDescription:@"“PhotosPicker” Would Like to Access Your Photos" handler:^BOOL(XCUIElement * _Nonnull interruptingElement) {
+        [interruptingElement.buttons[@"OK"] tap];
+        return YES;
+    }];
     XCUIElement *pickPhotosButton = app.buttons[@"Pick Photos"];
     [pickPhotosButton tap];
     [app.collectionViews.cells[@"Image 1"] tap];
