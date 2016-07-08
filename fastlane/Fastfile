@@ -29,7 +29,10 @@ platform :ios do
   end
 
   lane :test_it do
-    scan
+    scan(
+      devices: ["iPhone 6"],
+      clean: true
+    )
   end
 
   desc "Publish to Cocoapods"
