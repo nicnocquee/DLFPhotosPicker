@@ -14,5 +14,5 @@ install:
   - sudo sqlite3 "/Library/Application Support/com.apple.TCC/TCC.db" "INSERT INTO access VALUES ('kTCCServiceAccessibility','com.apple.dt.Xcode-Helper',0,1,1,NULL,NULL);"
 script:
   - set -o pipefail
-  - xcodebuild -scheme PhotosPicker -project ./PhotosPicker.xcodeproj -sdk iphonesimulator -destination "OS=9.3,name=iPhone 5" clean build | xcpretty -c || true
-  - xcodebuild -scheme PhotosPicker -project ./PhotosPicker.xcodeproj -sdk iphonesimulator -destination "OS=9.3,name=iPhone 5" test | xcpretty -c
+  - xcodebuild -scheme PhotosPicker -project ./PhotosPicker.xcodeproj -sdk iphonesimulator -destination "platform=iOS Simulator,id=EA3443AB-BF51-420B-BBA3-A1340FE48D1A" clean build | xcpretty -c || true
+  - xcodebuild -scheme PhotosPicker -project ./PhotosPicker.xcodeproj -sdk iphonesimulator -destination "platform=iOS Simulator,id=EA3443AB-BF51-420B-BBA3-A1340FE48D1A" test | xcpretty -c
