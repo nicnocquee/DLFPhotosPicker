@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/nicnocquee/DLFPhotosPicker.svg?branch=master)](https://travis-ci.org/nicnocquee/DLFPhotosPicker)
+![Platforms supported: iOS X](https://img.shields.io/badge/platform-iOS-blue.svg)
+
 This is a library to select single photo or multiple photos in iOS 8 or later using iOS Photos framework. I use this library in my app, [Delightful app](http://getdelightfulapp.com).
 
 Features:
