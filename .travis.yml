@@ -9,10 +9,12 @@ branches:
 before_install:
     - perl allowAccess
     - xcrun simctl list
+    - SIMULATOR_ID=$(xcrun instruments -s | grep -o "iPhone 5 (9.3) \[.*\]" | grep -o "\[.*\]" | sed "s/^\[\(.*\)\]$/\1/")
 install:
   - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
   - sudo sqlite3 "/Library/Application Support/com.apple.TCC/TCC.db" "INSERT INTO access VALUES ('kTCCServiceAccessibility','com.apple.dt.Xcode-Helper',0,1,1,NULL,NULL);"
 script:
+  - open -a "simulator" --args -CurrentDeviceUDID $SIMULATOR_ID
   - set -o pipefail
-  - xcodebuild -scheme PhotosPicker -project ./PhotosPicker.xcodeproj -sdk iphonesimulator -destination "platform=iOS Simulator,id=EA3443AB-BF51-420B-BBA3-A1340FE48D1A" clean build | xcpretty -c || true
-  - xcodebuild -scheme PhotosPicker -project ./PhotosPicker.xcodeproj -sdk iphonesimulator -destination "platform=iOS Simulator,id=EA3443AB-BF51-420B-BBA3-A1340FE48D1A" test | xcpretty -c
+  - xcodebuild -scheme PhotosPicker -project ./PhotosPicker.xcodeproj -sdk iphonesimulator clean build | xcpretty -c || true
+  - xcodebuild -scheme PhotosPicker -project ./PhotosPicker.xcodeproj -sdk iphonesimulator test | xcpretty -c
