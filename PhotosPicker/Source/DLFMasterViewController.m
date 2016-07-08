@@ -210,9 +210,11 @@ static NSString * const CollectionSegue = @"showCollection";
         [result enumerateObjectsUsingBlock:^(PHAssetCollection *obj, NSUInteger idx, BOOL *stop) {
             PHFetchOptions *options = [[PHFetchOptions alloc] init];
             [options setPredicate:[NSPredicate predicateWithFormat:@"mediaType == %d", PHAssetMediaTypeImage]];
-            PHFetchResult *countResult = [PHAsset fetchAssetsInAssetCollection:obj options:options];
-            if (countResult.count > 0) {
-                [filteredCollections addObject:obj];
+            if ([obj isKindOfClass:[PHAssetCollection class]]) {
+                PHFetchResult *countResult = [PHAsset fetchAssetsInAssetCollection:obj options:options];
+                if (countResult.count > 0) {
+                    [filteredCollections addObject:obj];
+                }
             }
         }];
         [collectionsArray addObject:filteredCollections];
