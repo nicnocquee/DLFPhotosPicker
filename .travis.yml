@@ -8,4 +8,10 @@ branches:
     - master
 before_install:
     - perl allowAccess
-script: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -scheme PhotosPicker -project ./PhotosPicker.xcodeproj -sdk iphonesimulator9.3 -destination platform='iOS Simulator','OS=9.3',name='iPhone 5' build test | xcpretty
+    - xcrun simctl list
+install:
+  - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
+script:
+  - set -o pipefail
+  - xcodebuild -scheme PhotosPicker -project ./PhotosPicker.xcodeproj -sdk iphonesimulator -destination "OS=9.3,name=iPhone 5" clean build | xcpretty -c || true
+  - xcodebuild -scheme PhotosPicker -project ./PhotosPicker.xcodeproj -sdk iphonesimulator -destination "OS=9.3,name=iPhone 5" test | xcpretty -c
