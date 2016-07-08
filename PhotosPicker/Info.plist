@@ -46,5 +46,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+    <key>com.apple.private.tcc.allow.overridable</key>
+    <array>
+        <string>kTCCServicePhotos</string>
+    </array>
 </dict>
 </plist>
