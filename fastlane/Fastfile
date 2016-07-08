@@ -36,6 +36,7 @@ platform :ios do
   lane :pod do
     ensure_git_status_clean
     ensure_git_branch
+    ensure_pod_trunk_session
     test_it
     version = version_bump_podspec
     pod_lib_lint
