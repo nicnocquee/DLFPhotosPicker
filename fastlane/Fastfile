@@ -34,8 +34,9 @@ platform :ios do
 
   desc "Publish to Cocoapods"
   lane :pod do
-    test_it
     ensure_git_status_clean
+    ensure_git_branch
+    test_it
     version = version_bump_podspec
     pod_lib_lint
     git_commit(
