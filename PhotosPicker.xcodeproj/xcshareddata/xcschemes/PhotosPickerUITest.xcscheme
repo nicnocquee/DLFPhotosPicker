@@ -21,11 +21,11 @@
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
+            buildForTesting = "NO"
+            buildForRunning = "NO"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
+            buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "0342756F1A25558F00B66342"
@@ -35,7 +35,7 @@
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
-            buildForTesting = "NO"
+            buildForTesting = "YES"
             buildForRunning = "NO"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
@@ -60,9 +60,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0342756F1A25558F00B66342"
-               BuildableName = "PhotosPickerTests.xctest"
-               BlueprintName = "PhotosPickerTests"
+               BlueprintIdentifier = "038D38641D2FDA6300C97C72"
+               BuildableName = "PhotosPickerUITests.xctest"
+               BlueprintName = "PhotosPickerUITests"
                ReferencedContainer = "container:PhotosPicker.xcodeproj">
             </BuildableReference>
          </TestableReference>

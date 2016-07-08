@@ -29,10 +29,11 @@ platform :ios do
   end
 
   lane :test_it do
-    scan(
-      destination: "platform=iOS Simulator,name=iPhone 6,OS=9.3",
-      clean: true
-    )
+    reset_simulators
+    simulatorId = Helper.backticks('xcrun instruments -s | grep -o "iPhone 6 (9.3) \[.*\]" | grep -o "\[.*\]" | sed "s/^\[\(.*\)\]$/\1/"').strip!
+    sh "set -o pipefail && env NSUnbufferedIO=YES xcodebuild -scheme PhotosPicker -project ../PhotosPicker.xcodeproj -destination 'platform=iOS Simulator,id="+simulatorId+"' clean build test | xcpretty "
+    simulatorId = Helper.backticks('xcrun instruments -s | grep -o "iPhone 5s (9.3) \[.*\]" | grep -o "\[.*\]" | sed "s/^\[\(.*\)\]$/\1/"').strip!
+    sh "set -o pipefail && env NSUnbufferedIO=YES xcodebuild -scheme PhotosPickerUITest -project ../PhotosPicker.xcodeproj -destination 'platform=iOS Simulator,id="+simulatorId+"' clean build test | xcpretty "
   end
 
   desc "Publish to Cocoapods"

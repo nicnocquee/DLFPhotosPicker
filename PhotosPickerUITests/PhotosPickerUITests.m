@@ -34,16 +34,15 @@
 
 - (void)testUI {
     XCUIApplication *app = [[XCUIApplication alloc] init];
+    sleep(2);
     [self addUIInterruptionMonitorWithDescription:@"“PhotosPicker” Would Like to Access Your Photos" handler:^BOOL(XCUIElement * _Nonnull interruptingElement) {
         [interruptingElement.buttons[@"OK"] tap];
         return YES;
     }];
     XCUIElement *pickPhotosButton = app.buttons[@"Pick Photos"];
     [pickPhotosButton tap];
-    sleep(2);
     [app.collectionViews.cells[@"Image 1"] tap];
     [pickPhotosButton tap];
-    sleep(2);
     [app.navigationBars[@"All Photos"].buttons[@"Albums"] tap];
     [app.tables.staticTexts[@"Camera Roll"] tap];
     [app.navigationBars[@"Camera Roll"].buttons[@"Albums"] tap];
