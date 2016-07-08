@@ -91,7 +91,7 @@
 }
 
 - (void)performTraitCollectionOverrideForSize:(CGSize)size {
-    if (!DLF_IS_IPAD) {
+    if (!(DLF_IS_IPAD)) {
         return;
     }
     UITraitCollection *trait = [UITraitCollection traitCollectionWithHorizontalSizeClass:UIUserInterfaceSizeClassRegular];
