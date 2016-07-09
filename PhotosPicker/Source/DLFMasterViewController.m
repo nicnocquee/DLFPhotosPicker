@@ -203,6 +203,35 @@ static NSString * const CollectionSegue = @"showCollection";
     });
 }
 
+- (BOOL)hasImageTypeAssetInCollection: (PHAssetCollection *)collection {
+    PHFetchOptions *assetOptions = [[PHFetchOptions alloc] init];
+    [assetOptions setPredicate:[NSPredicate predicateWithFormat:@"mediaType == %d", PHAssetMediaTypeImage]];
+    PHFetchResult *countResult = [PHAsset fetchAssetsInAssetCollection:collection options:assetOptions];
+    
+    return countResult.count > 0;
+}
+
+- (NSMutableArray *)doExtractAssetCollectionsFrom: (PHCollectionList *) collectionList {
+    NSMutableArray *filteredCollections = [NSMutableArray array];
+    
+    PHFetchOptions *collectionOptions = [[PHFetchOptions alloc] init];
+    [collectionOptions setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(localizedTitle)) ascending:YES]]];
+    PHFetchResult *result = [PHCollection fetchCollectionsInCollectionList:collectionList options:collectionOptions];
+    
+    [result enumerateObjectsUsingBlock:^(PHCollection *obj, NSUInteger idx, BOOL *stop) {
+        if ([obj isKindOfClass:[PHAssetCollection class]]) {
+            if ([self hasImageTypeAssetInCollection:(PHAssetCollection *)obj]) {
+                [filteredCollections addObject:obj];
+            }
+        } else if ([obj isKindOfClass:[PHCollectionList class]]) {
+            NSMutableArray *array = [self doExtractAssetCollectionsFrom:(PHCollectionList *)obj];
+            [filteredCollections addObjectsFromArray:array];
+        }
+    }];
+    
+    return filteredCollections;
+}
+
 - (void)excludeEmptyCollections {
     NSMutableArray *collectionsArray = [NSMutableArray array];
     for (PHFetchResult *result in self.collectionsFetchResults) {
@@ -211,10 +240,12 @@ static NSString * const CollectionSegue = @"showCollection";
             PHFetchOptions *options = [[PHFetchOptions alloc] init];
             [options setPredicate:[NSPredicate predicateWithFormat:@"mediaType == %d", PHAssetMediaTypeImage]];
             if ([obj isKindOfClass:[PHAssetCollection class]]) {
-                PHFetchResult *countResult = [PHAsset fetchAssetsInAssetCollection:obj options:options];
-                if (countResult.count > 0) {
+                if ([self hasImageTypeAssetInCollection:(PHAssetCollection *)obj]) {
                     [filteredCollections addObject:obj];
                 }
+            } else if ([obj isKindOfClass:[PHCollectionList class]]) {
+                NSMutableArray *array = [self doExtractAssetCollectionsFrom:(PHCollectionList *)obj];
+                [filteredCollections addObjectsFromArray: array];
             }
         }];
         [collectionsArray addObject:filteredCollections];
