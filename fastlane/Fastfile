@@ -36,6 +36,17 @@ platform :ios do
     sh "set -o pipefail && env NSUnbufferedIO=YES xcodebuild -scheme PhotosPickerUITest -project ../PhotosPicker.xcodeproj -destination 'platform=iOS Simulator,id="+simulatorId+"' clean build test | xcpretty "
   end
 
+  lane :demo do
+    sh "cd .. && set -o pipefail && xcodebuild -scheme PhotosPicker -project PhotosPicker.xcodeproj -configuration 'Debug' -sdk 'iphonesimulator9.3' -destination 'platform=iOS Simulator,name=iPhone 6' CONFIGURATION_BUILD_DIR=build  build | tee /Users/nico/Library/Logs/gym/PhotosPicker-PhotosPicker.log | xcpretty"
+    sh "cd ../build && zip -r PhotosPicker.app.zip  PhotosPicker.app"
+    appetizertoken = Helper.backticks('cat ../appetizerkey')
+    appetize(
+      path: './build/PhotosPicker.app.zip',
+      api_token: appetizertoken, # get it from https://appetize.io/docs#request-api-token
+      public_key: 'rkaxakuky73h73gvjre9fa9kkc' # get it from https://appetize.io/dashboard
+    )
+  end
+
   desc "Publish to Cocoapods"
   lane :pod do
     ensure_git_status_clean

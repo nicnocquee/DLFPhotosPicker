@@ -18,6 +18,11 @@ You will need to run the example app once in iPhone 5s simulator to allow the Ph
 fastlane ios test_it
 ```
 
+### ios demo
+```
+fastlane ios demo
+```
+
 ### ios pod
 ```
 fastlane ios pod
