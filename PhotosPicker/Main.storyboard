@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="d9g-5C-NsS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="d9g-5C-NsS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Sample View Controller-->
@@ -26,13 +28,33 @@
                                     <action selector="didTapPickPhotos:" destination="d9g-5C-NsS" eventType="touchUpInside" id="P9O-xA-rBC"/>
                                 </connections>
                             </button>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cSw-3C-iQH">
+                                <rect key="frame" x="20" y="20" width="560" height="251"/>
+                            </scrollView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="1A4-yo-uF1">
+                                <rect key="frame" x="237" y="339" width="127" height="29"/>
+                                <segments>
+                                    <segment title="Single"/>
+                                    <segment title="Multiple"/>
+                                </segments>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="cSw-3C-iQH" firstAttribute="top" secondItem="BDn-A3-Jxf" secondAttribute="bottom" id="GnM-Ir-onY"/>
+                            <constraint firstItem="cSw-3C-iQH" firstAttribute="bottom" secondItem="AM6-PZ-TcG" secondAttribute="top" constant="-10" id="GtA-rH-W4Y"/>
                             <constraint firstAttribute="centerX" secondItem="AM6-PZ-TcG" secondAttribute="centerX" constant="-0.5" id="Igc-FQ-Jg0"/>
+                            <constraint firstItem="1A4-yo-uF1" firstAttribute="centerX" secondItem="AM6-PZ-TcG" secondAttribute="centerX" id="LeZ-sr-Q80"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="cSw-3C-iQH" secondAttribute="trailing" id="OoF-xg-ZGG"/>
                             <constraint firstAttribute="centerY" secondItem="AM6-PZ-TcG" secondAttribute="centerY" id="Wg6-Bt-2A2"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="cSw-3C-iQH" secondAttribute="leading" id="u8d-U8-jQH"/>
+                            <constraint firstItem="1A4-yo-uF1" firstAttribute="top" secondItem="AM6-PZ-TcG" secondAttribute="bottom" constant="20" id="vEP-k0-wn2"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="scrollView" destination="cSw-3C-iQH" id="uet-G8-uLX"/>
+                        <outlet property="selectionTypeSelector" destination="1A4-yo-uF1" id="v8N-US-n4M"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6kj-FI-jhE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

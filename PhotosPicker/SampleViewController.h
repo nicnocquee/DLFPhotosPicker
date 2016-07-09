@@ -10,6 +10,9 @@
 
 @interface SampleViewController : UIViewController
 
+@property (weak) IBOutlet UISegmentedControl *selectionTypeSelector;
+@property (weak) IBOutlet UIScrollView *scrollView;
+
 - (IBAction)didTapPickPhotos:(id)sender;
 
 @end

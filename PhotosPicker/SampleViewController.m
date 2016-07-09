@@ -30,18 +30,39 @@
 - (IBAction)didTapPickPhotos:(id)sender {
     DLFPhotosPickerViewController *photosPicker = [[DLFPhotosPickerViewController alloc] init]; 
     [photosPicker setPhotosPickerDelegate:self];
-    [photosPicker setMultipleSelections:NO];
+    [photosPicker setMultipleSelections:self.selectionTypeSelector.selectedSegmentIndex==1];
     [self presentViewController:photosPicker animated:YES completion:nil];
+}
+
+- (void)addImagesToScrollView:(NSArray<PHAsset*> *)images {
+    for (UIView *view in self.scrollView.subviews) {
+        [view removeFromSuperview];
+    }
+    
+    CGSize imageViewSize = CGSizeMake(self.scrollView.frame.size.height, self.scrollView.frame.size.height);
+    CGRect previousRect = CGRectMake(-imageViewSize.width, 0, imageViewSize.width, imageViewSize.height);
+    CGFloat maxX = 0;
+    for (PHAsset *asset in images) {
+        UIImageView *imageView = [[UIImageView alloc] init];
+        [imageView setBackgroundColor:[UIColor colorWithWhite:0 alpha:0.1]];
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        imageView.frame = CGRectOffset(previousRect, imageViewSize.width + 10, 0);
+        [self.scrollView addSubview:imageView];
+        previousRect = imageView.frame;
+        maxX = CGRectGetMaxX(imageView.frame);
+        
+        [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:imageViewSize contentMode:PHImageContentModeDefault options:nil resultHandler:^(UIImage *result, NSDictionary *info) {
+            [imageView setImage:result];
+        }];
+    }
+    [self.scrollView setContentSize:CGSizeMake(maxX, imageViewSize.height)];
 }
 
 #pragma mark - DLFPhotosPickerViewControllerDelegate
 
 - (void)photosPicker:(DLFPhotosPickerViewController *)photosPicker detailViewController:(DLFDetailViewController *)detailViewController didSelectPhoto:(PHAsset *)photo {
     [photosPicker dismissViewControllerAnimated:YES completion:^{
-        [[PHImageManager defaultManager] requestImageForAsset:photo targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeDefault options:nil resultHandler:^(UIImage *result, NSDictionary *info) {
-            NSLog(@"Selected one asset");
-            
-        }];
+        [self addImagesToScrollView:@[photo]];
     }];
 }
 
@@ -51,7 +72,10 @@
 
 - (void)photosPicker:(DLFPhotosPickerViewController *)photosPicker detailViewController:(DLFDetailViewController *)detailViewController didSelectPhotos:(NSArray *)photos {
     NSLog(@"selected %d photos", (int)photos.count);
-    [photosPicker dismissViewControllerAnimated:YES completion:nil];
+    [photosPicker dismissViewControllerAnimated:YES completion:^{
+        [self addImagesToScrollView:photos];
+    }];
+    
 }
 
 - (void)photosPicker:(DLFPhotosPickerViewController *)photosPicker detailViewController:(DLFDetailViewController *)detailViewController configureCell:(DLFPhotoCell *)cell indexPath:(NSIndexPath *)indexPath asset:(PHAsset *)asset {
