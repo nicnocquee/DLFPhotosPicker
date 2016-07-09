@@ -15,6 +15,11 @@ Features:
 - Quickly clear all selections.
 - Selected photos are retained when changing album.
 
+Demo
+--
+
+Try the sample app in your browser [here](https://appetize.io/app/rkaxakuky73h73gvjre9fa9kkc?device=iphone6plus&scale=50&orientation=portrait&osVersion=9.3&deviceColor=white).
+
 How to use
 --
 
