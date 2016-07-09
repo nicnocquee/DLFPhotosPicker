@@ -33,6 +33,7 @@
 }
 
 - (void)testUI {
+    
     XCUIApplication *app = [[XCUIApplication alloc] init];
     sleep(2);
     [self addUIInterruptionMonitorWithDescription:@"“PhotosPicker” Would Like to Access Your Photos" handler:^BOOL(XCUIElement * _Nonnull interruptingElement) {
@@ -47,6 +48,17 @@
     [app.tables.staticTexts[@"Camera Roll"] tap];
     [app.navigationBars[@"Camera Roll"].buttons[@"Albums"] tap];
     [app.navigationBars[@"Albums"].buttons[@"Cancel"] tap];
+    
+    [app.buttons[@"Multiple"] tap];
+    [pickPhotosButton tap];
+    [app.collectionViews.cells[@"Image 1"] tap];
+    [app.collectionViews.cells[@"Image 2"] tap];
+    [app.buttons[@"Clear"] tap];
+    [app.collectionViews.cells[@"Image 3"] tap];
+    [app.collectionViews.cells[@"Image 1"] tap];
+    [app.collectionViews.cells[@"Image 2"] tap];
+    [app.navigationBars[@"All Photos"].buttons[@"Next"] tap];
+    
     
     XCTAssertTrue(true);
 }
