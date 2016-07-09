@@ -39,7 +39,8 @@ platform :ios do
   lane :demo do
     sh "cd .. && set -o pipefail && xcodebuild -scheme PhotosPicker -project PhotosPicker.xcodeproj -configuration 'Debug' -sdk 'iphonesimulator9.3' -destination 'platform=iOS Simulator,name=iPhone 6' CONFIGURATION_BUILD_DIR=build  build | tee /Users/nico/Library/Logs/gym/PhotosPicker-PhotosPicker.log | xcpretty"
     sh "cd ../build && zip -r PhotosPicker.app.zip  PhotosPicker.app"
-    appetizertoken = Helper.backticks('cat ../appetizerkey')
+    sh "cd .. && blackbox_edit_start appetizerkey"
+    appetizertoken = Helper.backticks('cat ../appetizerkey').strip!
     appetize(
       path: './build/PhotosPicker.app.zip',
       api_token: appetizertoken, # get it from https://appetize.io/docs#request-api-token
