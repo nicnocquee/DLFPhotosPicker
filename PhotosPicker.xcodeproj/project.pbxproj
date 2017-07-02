@@ -10,7 +10,6 @@
 		0342755A1A25558E00B66342 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 034275591A25558E00B66342 /* main.m */; };
 		0342755D1A25558E00B66342 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0342755C1A25558E00B66342 /* AppDelegate.m */; };
 		034275681A25558E00B66342 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 034275671A25558E00B66342 /* Images.xcassets */; };
-		0342756B1A25558E00B66342 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 034275691A25558E00B66342 /* LaunchScreen.xib */; };
 		034275771A25558F00B66342 /* PhotosPickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 034275761A25558F00B66342 /* PhotosPickerTests.m */; };
 		034275821A2556D800B66342 /* DLFMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 034275811A2556D800B66342 /* DLFMasterViewController.m */; };
 		034275851A2556F900B66342 /* DLFDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 034275841A2556F900B66342 /* DLFDetailViewController.m */; };
@@ -24,6 +23,7 @@
 		03BBA68D1A286ABE001F83D6 /* SampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BBA68C1A286ABE001F83D6 /* SampleViewController.m */; };
 		03E52B721B09FC88004C57B3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03E52B711B09FC88004C57B3 /* UIKit.framework */; };
 		03FD38241A64EA6C0058D9FA /* DLFPhotosLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD38231A64EA6C0058D9FA /* DLFPhotosLibrary.m */; };
+		03FF393E1F098033005D4969 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03FF393D1F098033005D4969 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +50,6 @@
 		0342755B1A25558E00B66342 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0342755C1A25558E00B66342 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		034275671A25558E00B66342 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		0342756A1A25558E00B66342 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		034275701A25558F00B66342 /* PhotosPickerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotosPickerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		034275751A25558F00B66342 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		034275761A25558F00B66342 /* PhotosPickerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotosPickerTests.m; sourceTree = "<group>"; };
@@ -77,6 +76,7 @@
 		03E52B711B09FC88004C57B3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		03FD38221A64EA6C0058D9FA /* DLFPhotosLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLFPhotosLibrary.h; sourceTree = "<group>"; };
 		03FD38231A64EA6C0058D9FA /* DLFPhotosLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLFPhotosLibrary.m; sourceTree = "<group>"; };
+		03FF393D1F098033005D4969 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,12 +134,12 @@
 				0342755B1A25558E00B66342 /* AppDelegate.h */,
 				0342755C1A25558E00B66342 /* AppDelegate.m */,
 				034275671A25558E00B66342 /* Images.xcassets */,
-				034275691A25558E00B66342 /* LaunchScreen.xib */,
 				034275571A25558E00B66342 /* Supporting Files */,
 				034275861A25570000B66342 /* Source */,
 				03BBA6891A286A8B001F83D6 /* Main.storyboard */,
 				03BBA68B1A286ABE001F83D6 /* SampleViewController.h */,
 				03BBA68C1A286ABE001F83D6 /* SampleViewController.m */,
+				03FF393D1F098033005D4969 /* LaunchScreen.storyboard */,
 			);
 			path = PhotosPicker;
 			sourceTree = "<group>";
@@ -268,13 +268,18 @@
 				TargetAttributes = {
 					034275531A25558E00B66342 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = NNTV3ZQR3E;
 					};
 					0342756F1A25558F00B66342 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = NNTV3ZQR3E;
+						ProvisioningStyle = Automatic;
 						TestTargetID = 034275531A25558E00B66342;
 					};
 					038D38641D2FDA6300C97C72 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = NNTV3ZQR3E;
+						ProvisioningStyle = Automatic;
 						TestTargetID = 034275531A25558E00B66342;
 					};
 				};
@@ -304,7 +309,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0342756B1A25558E00B66342 /* LaunchScreen.xib in Resources */,
+				03FF393E1F098033005D4969 /* LaunchScreen.storyboard in Resources */,
 				034275681A25558E00B66342 /* Images.xcassets in Resources */,
 				03BBA68A1A286A8B001F83D6 /* Main.storyboard in Resources */,
 			);
@@ -374,17 +379,6 @@
 			targetProxy = 038D386A1D2FDA6300C97C72 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		034275691A25558E00B66342 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				0342756A1A25558E00B66342 /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		034275781A25558F00B66342 /* Debug */ = {
@@ -468,12 +462,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = NNTV3ZQR3E;
 				INFOPLIST_FILE = PhotosPicker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.getdelightfulapp.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -481,12 +476,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = NNTV3ZQR3E;
 				INFOPLIST_FILE = PhotosPicker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.getdelightfulapp.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -494,6 +490,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NNTV3ZQR3E;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -514,6 +513,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.getdelightfulapp.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhotosPicker.app/PhotosPicker";
 			};
 			name = Debug;
@@ -522,6 +522,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NNTV3ZQR3E;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -538,6 +541,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.getdelightfulapp.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhotosPicker.app/PhotosPicker";
 			};
 			name = Release;
@@ -546,13 +550,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = NNTV3ZQR3E;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = PhotosPickerUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.delightfuldev.PhotosPickerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TEST_TARGET_NAME = PhotosPicker;
 			};
 			name = Debug;
@@ -561,14 +569,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = NNTV3ZQR3E;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = PhotosPickerUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.delightfuldev.PhotosPickerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TEST_TARGET_NAME = PhotosPicker;
 			};
 			name = Release;

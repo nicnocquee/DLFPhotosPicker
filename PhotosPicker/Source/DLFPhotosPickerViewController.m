@@ -56,13 +56,9 @@
     [self.view addSubview:splitVC.view];
     [splitVC didMoveToParentViewController:self];
     
-    [self performTraitCollectionOverrideForSize:self.view.bounds.size];
-    
     [[DLFPhotosSelectionManager sharedManager] removeAllAssets];
     
-    if (DLF_IS_IPAD) {
-        self.splitVC.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
-    }
+    self.splitVC.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
     
     [[DLFPhotosLibrary sharedLibrary] startObserving];
     
@@ -81,23 +77,8 @@
     }
 }
 
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-    [self performTraitCollectionOverrideForSize:size];
-}
-
 - (UISplitViewController *)splitViewController {
     return [self.childViewControllers firstObject];
-}
-
-- (void)performTraitCollectionOverrideForSize:(CGSize)size {
-    if (!(DLF_IS_IPAD)) {
-        return;
-    }
-    UITraitCollection *trait = [UITraitCollection traitCollectionWithHorizontalSizeClass:UIUserInterfaceSizeClassRegular];
-    for (UIViewController *vc in self.childViewControllers) {
-        [self setOverrideTraitCollection:trait forChildViewController:vc];
-    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

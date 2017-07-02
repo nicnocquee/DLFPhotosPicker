@@ -11,7 +11,7 @@ Features:
 - Pinch out a photo to preview (zoom).
 - Drag to select multiple photos quickly. Simply drag to left or right to start selecting multiple photos.
 - Works on both landscape and portrait.
-- Using iOS 8's UISplitViewController for albums and photos. You can see the split view on iPhone 6 plus landscape.
+- Using UISplitViewController for albums and photos. You can see the split view on iPhone 6 plus landscape.
 - Quickly clear all selections.
 - Selected photos are retained when changing album.
 

@@ -1,9 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="d9g-5C-NsS">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.19" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="d9g-5C-NsS">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.16"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Sample View Controller-->
@@ -15,31 +19,31 @@
                         <viewControllerLayoutGuide type="bottom" id="nYE-mG-AP3"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Kch-0S-mRo">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AM6-PZ-TcG">
-                                <rect key="frame" x="245" y="281" width="111" height="38"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                <state key="normal" title="Pick Photos">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="didTapPickPhotos:" destination="d9g-5C-NsS" eventType="touchUpInside" id="P9O-xA-rBC"/>
-                                </connections>
-                            </button>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" directionalLockEnabled="YES" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cSw-3C-iQH">
-                                <rect key="frame" x="20" y="20" width="560" height="251"/>
+                                <rect key="frame" x="16" y="20" width="343" height="284.5"/>
                             </scrollView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="1A4-yo-uF1">
-                                <rect key="frame" x="237" y="339" width="127" height="29"/>
+                                <rect key="frame" x="124.5" y="372.5" width="127" height="29"/>
                                 <segments>
                                     <segment title="Single"/>
                                     <segment title="Multiple"/>
                                 </segments>
                             </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AM6-PZ-TcG">
+                                <rect key="frame" x="134" y="314" width="107" height="38"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <state key="normal" title="Pick Photos">
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTapPickPhotos:" destination="d9g-5C-NsS" eventType="touchUpInside" id="P9O-xA-rBC"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="cSw-3C-iQH" firstAttribute="top" secondItem="BDn-A3-Jxf" secondAttribute="bottom" id="GnM-Ir-onY"/>
                             <constraint firstItem="cSw-3C-iQH" firstAttribute="bottom" secondItem="AM6-PZ-TcG" secondAttribute="top" constant="-10" id="GtA-rH-W4Y"/>

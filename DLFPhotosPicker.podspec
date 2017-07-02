@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "DLFPhotosPicker"
-  s.version      = "0.16.2"
+  s.version      = "0.16.3"
   s.summary      = "Photos picker for iOS using iOS 8 Photos framework"
 
   s.description  = <<-DESC
