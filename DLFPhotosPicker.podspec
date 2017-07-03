@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DLFPhotosPicker'
-  s.version          = '0.16.4'
+  s.version          = '0.16.5'
   s.summary          = 'Photos picker for iOS using iOS 8 Photos framework'
 
 # This description is used to generate tags and improve search results.
