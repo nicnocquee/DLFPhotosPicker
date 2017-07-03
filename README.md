@@ -23,7 +23,7 @@ Try the sample app in your browser [here](https://appetize.io/app/rkaxakuky73h73
 How to use
 --
 
-- Use Cocoapods: `pod 'DLFPhotosPicker'` or copy all the files in `Source` folder to your project.
+- Use Cocoapods: `pod 'DLFPhotosPicker'` or copy all the files in `DLFPhotosPicker/Classes` folder to your project.
 - Present the `DLFPhotosPickerViewController`
 
 ```objc
