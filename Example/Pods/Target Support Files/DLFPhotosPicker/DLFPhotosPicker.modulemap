@@ -1,0 +1,6 @@
+framework module DLFPhotosPicker {
+  umbrella header "DLFPhotosPicker-umbrella.h"
+
+  export *
+  module * { export * }
+}

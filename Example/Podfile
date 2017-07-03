@@ -1,0 +1,12 @@
+use_frameworks!
+
+target 'DLFPhotosPicker_Example' do
+  pod 'DLFPhotosPicker', :path => '../'
+
+  target 'DLFPhotosPicker_Tests' do
+    inherit! :search_paths
+    
+    pod 'OCMock'
+    
+  end
+end

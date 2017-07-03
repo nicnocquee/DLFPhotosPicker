@@ -1,0 +1,19 @@
+PODS:
+  - DLFPhotosPicker (0.16.3)
+  - OCMock (3.4)
+
+DEPENDENCIES:
+  - DLFPhotosPicker (from `../`)
+  - OCMock
+
+EXTERNAL SOURCES:
+  DLFPhotosPicker:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  DLFPhotosPicker: b2f5af66ea356c5696768dee230e925bf0ce1b50
+  OCMock: 35ae71d6a8fcc1b59434d561d1520b9dd4f15765
+
+PODFILE CHECKSUM: 0f462f85f55c8e4836b84dae1b4c25c50e24e0be
+
+COCOAPODS: 1.2.1

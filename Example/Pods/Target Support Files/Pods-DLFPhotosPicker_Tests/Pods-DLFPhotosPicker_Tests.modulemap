@@ -1,0 +1,6 @@
+framework module Pods_DLFPhotosPicker_Tests {
+  umbrella header "Pods-DLFPhotosPicker_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}

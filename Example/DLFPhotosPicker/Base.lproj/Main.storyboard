@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.19" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="whP-gf-Uak">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.16"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Sample View Controller-->
+        <scene sceneID="wQg-tq-qST">
+            <objects>
+                <viewController id="whP-gf-Uak" customClass="SampleViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="uEw-UM-LJ8"/>
+                        <viewControllerLayoutGuide type="bottom" id="Mvr-aV-6Um"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="TpU-gO-2f1">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QAU-D8-iti">
+                                <rect key="frame" x="16" y="20" width="343" height="267"/>
+                            </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IMn-e4-amK">
+                                <rect key="frame" x="116" y="318" width="143" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="143" id="WLp-Fu-aJM"/>
+                                </constraints>
+                                <state key="normal" title="Pick Photos"/>
+                                <connections>
+                                    <action selector="didTapPickPhotos:" destination="whP-gf-Uak" eventType="touchUpInside" id="fgO-yo-5UB"/>
+                                </connections>
+                            </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="hdc-AG-Q4a">
+                                <rect key="frame" x="124" y="356" width="127" height="29"/>
+                                <segments>
+                                    <segment title="Single"/>
+                                    <segment title="Multiple"/>
+                                </segments>
+                            </segmentedControl>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="IMn-e4-amK" firstAttribute="centerX" secondItem="hdc-AG-Q4a" secondAttribute="centerX" id="4h3-0y-vyM"/>
+                            <constraint firstItem="hdc-AG-Q4a" firstAttribute="top" secondItem="IMn-e4-amK" secondAttribute="bottom" constant="8" symbolic="YES" id="Gya-f6-ehc"/>
+                            <constraint firstItem="QAU-D8-iti" firstAttribute="top" secondItem="uEw-UM-LJ8" secondAttribute="bottom" id="KCk-J3-fN1"/>
+                            <constraint firstItem="QAU-D8-iti" firstAttribute="leading" secondItem="TpU-gO-2f1" secondAttribute="leading" constant="16" id="Rju-SN-04a"/>
+                            <constraint firstItem="IMn-e4-amK" firstAttribute="top" secondItem="QAU-D8-iti" secondAttribute="bottom" constant="31" id="Ylz-2E-GJD"/>
+                            <constraint firstItem="IMn-e4-amK" firstAttribute="centerX" secondItem="QAU-D8-iti" secondAttribute="centerX" id="asU-cy-W2B"/>
+                            <constraint firstItem="QAU-D8-iti" firstAttribute="height" secondItem="TpU-gO-2f1" secondAttribute="height" multiplier="0.4" id="fX6-Iv-nvQ"/>
+                            <constraint firstAttribute="trailing" secondItem="QAU-D8-iti" secondAttribute="trailing" constant="16" id="tRn-se-N3a"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="scrollView" destination="QAU-D8-iti" id="ttz-9f-GWu"/>
+                        <outlet property="selectionTypeSelector" destination="hdc-AG-Q4a" id="DZC-J5-pp2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tc2-Qw-aMS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="304.80000000000001" y="432.23388305847078"/>
+        </scene>
+    </scenes>
+</document>
